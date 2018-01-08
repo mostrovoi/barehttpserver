@@ -14,27 +14,37 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public String create(String username) {
         Session session = new Session(UUID.randomUUID().toString(), username);
-        sessionMap.put(session.getToken(), session);
+        sessionMap.put(username, session);
         return session.getToken();
     }
-//
-//	@Override
-//	public String get(String username) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	//TODO: return void maybe?
-//	@Override
-//	public boolean delete(String username) {
-//        sessionMap.
-//        return true;
-//	}
-//
-//	//TODO: Remove expired sessions
+
+	@Override
+	public String get(String username) {
+		Session s = sessionMap.get(username); 
+		return (s!=null) ? s.getToken() : null;
+	}
+
+
+	@Override
+	public void delete(String username) {
+        sessionMap.remove(username);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isValid(String username) {
-		Session s = sessionMap.get(sessionId);
-		return (s!= null && s.isValid());
+		boolean result = true;
+		Session s = sessionMap.get(username);
+		if(s!=null) {
+			if (!s.isValid()) {
+				this.delete(username);
+				result = false;
+			}
+		} else {
+			this.create(username);
+		}
+		return result;
 	}
 }

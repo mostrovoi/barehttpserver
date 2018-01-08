@@ -16,11 +16,7 @@ public class CustomBasicAuthenticator extends BasicAuthenticator {
 
     @Override
     public boolean checkCredentials(String username, String password) {
-       
-    	if(userService.doLogin(username, password))
-    		return sessionService.isValid(username);
-    	else
-    		return false;
+        return  (userService.doLogin(username, password)) ? sessionService.isValid(username) : true;
     }
 
 }
