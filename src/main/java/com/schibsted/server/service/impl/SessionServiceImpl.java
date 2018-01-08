@@ -33,7 +33,7 @@ public class SessionServiceImpl implements SessionService {
 //
 //	//TODO: Remove expired sessions
 	@Override
-	public boolean isValid(String sessionId) {
+	public boolean isValid(String username) {
 		Session s = sessionMap.get(sessionId);
 		return (s!= null && s.isValid());
 	}

@@ -8,6 +8,6 @@ public interface SessionService {
 
 	//boolean delete(String username);
 	
-	boolean isValid(String sessionId);
+	boolean isValid(String username);
 
 }
