@@ -5,10 +5,11 @@ import java.io.OutputStream;
 
 import com.sun.net.httpserver.HttpExchange;
 
-public enum HttpServerUtils {
-	INSTANCE;
+public class HttpServerUtils {
+
+	private HttpServerUtils () {}
 	
-    public void send(HttpExchange he, String response, int statuscode) throws IOException {
+    public static void send(HttpExchange he, String response, int statuscode) throws IOException {
         he.sendResponseHeaders(statuscode, response.length());
         OutputStream os = he.getResponseBody();
         os.write(response.getBytes());

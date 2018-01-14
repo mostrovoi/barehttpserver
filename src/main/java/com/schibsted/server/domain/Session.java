@@ -10,7 +10,6 @@ public class Session {
     private final String token;
     private final String username;
 
-    //TODO: Javadoc
     public Session(String token, String username) {
         this.time = System.currentTimeMillis();
     	this.token = token;

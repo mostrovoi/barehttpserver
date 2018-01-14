@@ -1,7 +1,7 @@
 package com.schibsted.server.utils;
 
 /**
- * TODO: JAVAODC
+ * TODO: JAVADOC
  * @author operezdo
  *
  */

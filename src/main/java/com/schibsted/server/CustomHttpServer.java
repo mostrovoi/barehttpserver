@@ -12,7 +12,7 @@ public class CustomHttpServer {
 
 	private final HttpServer server;
     private static final int PORT = 8080;
-    
+
     public CustomHttpServer() throws IOException {
     	server = HttpServer.create(new InetSocketAddress(PORT), 0);
     }

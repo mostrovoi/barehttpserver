@@ -17,12 +17,12 @@ public class PageHandler implements HttpHandler {
 	private static final String PAGE_TEMPLATE_NAME = "page.mustache";
 	private static final String ERROR_TEMPLATE_NAME = "error.mustache";
 	
-	private final Role role;
+	private final Role validRole;
 	private final UserService userService;
 	
 	public PageHandler(UserService us, Role r) {
 		this.userService = us;
-		this.role = r;
+		this.validRole = r;
 	}
 
 	@Override
@@ -30,15 +30,15 @@ public class PageHandler implements HttpHandler {
 
 		String username = he.getPrincipal().getUsername();
 		
-		if(this.userService.isUserAuthorized(username, role)) {
+		if(this.userService.hasUserRole(username, validRole)) {
 			//TODO: Page name based on role. Util class
 	        String pageHtml = ViewBuilder.create(PAGE_TEMPLATE_NAME, new PageTemplate("Page ",username));
-	        HttpServerUtils.INSTANCE.send(he, pageHtml,HttpStatus.SC_OK);
+	        HttpServerUtils.send(he, pageHtml,HttpStatus.SC_OK);
 		}
 		else {
 			//TODO: Util class to get description based on error code
 	        String errorHtml = ViewBuilder.create(ERROR_TEMPLATE_NAME, new PageTemplate("Error",username,"SS"));
-	        HttpServerUtils.INSTANCE.send(he, errorHtml,HttpStatus.SC_FORBIDDEN);
+	        HttpServerUtils.send(he, errorHtml,HttpStatus.SC_FORBIDDEN);
 	        
 		}
 	}

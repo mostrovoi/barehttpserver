@@ -1,41 +1,79 @@
 package com.schibsted.server.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.schibsted.server.dao.UserDao;
+import com.schibsted.server.dao.impl.UserDaoImpl;
 import com.schibsted.server.domain.User;
 import com.schibsted.server.domain.User.Role;
+import com.schibsted.server.service.UserExistsException;
 import com.schibsted.server.service.UserService;
+import com.schibsted.server.service.UsernameNotFoundException;
 
 public class UserServiceImpl implements UserService {
 
-	private final UserRepository users;
-	
+	private final UserDao users;
+	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+
 	public UserServiceImpl() {
-		users = new UserRepository();
-	}
-	
-	// returns null if not found ?
-	public User getUserByUsername(String username) {
-		 return users.getRepository().get(username);
+		users = new UserDaoImpl();
 	}
 
-	public List<User> getUsers() {
-		return new ArrayList<User>(users.getRepository().values());
-	}
-
-
-	public boolean doLogin(String username, String password) {
-		User user = this.getUserByUsername(username);
-		return (user != null && user.authenticate(password));
-	}
-
-	public boolean isUserAuthorized(String username, Role role) {
-		User user = this.getUserByUsername(username);
-		if (user != null && user.hasRole(role))
-			return true;
+	@Override
+	public User getUserByUsername(String username) throws UsernameNotFoundException {
+		User u = users.get(username);
+		if (u == null)
+			throw new UsernameNotFoundException("username " + username + " not found");
 		else
+			return u;
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return users.getAll();
+	}
+
+	@Override
+	public boolean checkCredentials(String username, String password) {
+		User user;
+		try {
+			user = this.getUserByUsername(username);
+		} catch (UsernameNotFoundException e) {
+			logger.warn("Username {} not found", username);
 			return false;
+		}
+		return user.authenticate(password);
+	}
+
+	@Override
+	public boolean hasUserRole(String username, Role role) {
+		User user;
+		try {
+			user = this.getUserByUsername(username);
+		} catch (UsernameNotFoundException e) {
+			logger.warn("Username {} not found", username);
+			return false;
+		}
+		return user.hasRole(role);
+	}
+
+	@Override
+	public boolean delete(String username) throws UsernameNotFoundException {
+		User user = this.getUserByUsername(username);
+		return users.delete(user);
+	}
+
+	@Override
+	public void create(User user) throws UserExistsException {
+		users.add(user);
+	}
+
+	@Override
+	public void update(User user) throws UsernameNotFoundException {
+		users.update(user);
 	}
 
 }

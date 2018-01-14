@@ -26,10 +26,10 @@ public class LogoutHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange he) throws IOException {
         String username = he.getPrincipal().getUsername();
-        
+
        // sessionService.delete(username);
         
         String loginForm = ViewBuilder.create(LOGOUT_TEMPLATE_NAME, new PageTemplate("Logout"));
-        HttpServerUtils.INSTANCE.send(he, loginForm, HttpStatus.SC_OK);
+        HttpServerUtils.send(he, loginForm, HttpStatus.SC_OK);
     }
 }

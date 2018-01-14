@@ -33,8 +33,18 @@ public class User {
 	public List<Role> getRoles() {
 		return roles;
 	}
+	
+	/**
+	 * This custom setter avoids the usage of null in roles
+	 * Thus, working the same way than in the constructor
+	 * 
+	 * @param roles
+	 */
 	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+		if(roles == null )
+			this.roles.clear();
+		else
+			this.roles = roles;
 	}
 	
 	public void setPassword(String password) {
@@ -56,6 +66,10 @@ public class User {
 			return false;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * hashCode method based on the assumption that username is unique
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,8 +79,11 @@ public class User {
 		return result;
 	}
 	
-	//Based on that the username is unique
-	//TODO: Make tests checking equals method 
+
+	/**
+	 * {@inheritDoc}
+	 * Equals method based on the assumption that username is unique
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
