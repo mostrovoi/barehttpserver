@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'groovy'
+
+
+group = 'com.schibsted.server'
+version = '1.0'
+
+description = "Technical test implementation for Schibsted Spain"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+
+repositories {
+     mavenCentral()
+     maven { url "https://raw.github.com/mostrovoi/repository/master/" }
+}
+
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    compile group: 'com.github.spullara.mustache.java', name: 'compiler', version:'0.9.5'
+    compile group: 'com.danisola.restify', name: 'url', version: '1.0.0'
+    
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testCompile group: 'org.spockframework', name: 'spock-core', version:'1.1-groovy-2.4'
+    testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.4.10'
+}
+
+mainClassName = 'App'
