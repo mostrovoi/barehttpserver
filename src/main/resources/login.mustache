@@ -3,55 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript">
-    
-	$(function() {
-	
-		 function getParameterByName(name) {
-		    var url = window.location.href;
-		    name = name.replace(/[\[\]]/g, "\\$&");
-		    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-		        results = regex.exec(url);
-		    if (!results) return null;
-		    if (!results[2]) return '';
-		    return decodeURIComponent(results[2].replace(/\+/g, " "));
-		}
-
-	 	 $("#error").hide();
-	     $("form").submit(function(e) {
-      		 // prevents default behaviour, i.e. sending original form
-       	     e.preventDefault();
-            var username = $("input#username").val();
-            var password = $("input#password").val();  
-			$.ajax
-			({
-			  type: "GET",
-			  url: "login",
-			  dataType: 'json',
-			  async: true,
-			  headers: {
-			    "Authorization": "Basic " + btoa(username + ":" + password)
-			  },
-			  success: function (data){ 
-     			  var inc = getParameterByName("inc");
-      			  if(inc != null) {
-                        window.location.href = "http://localhost:8080"+inc;
-                   }else {
-                       window.location.href = "http://localhost:8080/index";
-                   }
-			  },
-			  error: function(xhr, ajaxOptions, thrownError) {
-                    $("#error").show();
-                }
-			}); 
-		 })
-        }); 
-    </script>
 </head>
 <body>
 	<h2>{{title}}</h2>
-	<form action="">
+	<form method="post" action="login">
 		<div>
 			<label>Username</label>
 			<input type="text" placeholder="Enter Username" name="username" id="username" required/>
@@ -61,10 +16,10 @@
 			<input type="password" placeholder="Enter Password" name="password" id="password" required/>
 		</div>
 		<div>
-			<input type="submit" id="submit" value="Login"/>
+			<input type="submit" value="Login"/>
 		</div>
-		<div id="error">
-			Wrong username or password
+		<div>
+		{{error}}
 		</div>
 	</form>
 </body>

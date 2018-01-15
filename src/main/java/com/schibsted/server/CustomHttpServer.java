@@ -2,7 +2,11 @@ package com.schibsted.server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import com.schibsted.server.domain.User.Role;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpHandler;
@@ -35,10 +39,14 @@ public class CustomHttpServer {
 		return URL+PORT;
 	}
 
-	public HttpContext createContextWithFilter(String path, HttpHandler httpHandler, Filter filter) {
+	public HttpContext createContextWithFilters(String path, HttpHandler httpHandler, Filter... filter) {
 		HttpContext context = server.createContext(path, httpHandler);
-		if (filter != null)
-			context.getFilters().add(filter);
+		if (filter != null) {
+	        List<Filter> filters = new ArrayList<Filter>();
+	        filters.addAll(Arrays.asList(filter));
+			context.getFilters().addAll(filters);
+		}
+
 		return context;
 	}
 }

@@ -8,6 +8,7 @@ import com.schibsted.server.service.UserService;
 import com.schibsted.server.service.UsernameNotFoundException;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.utils.RequestMethod;
+import com.schibsted.server.utils.StreamUtils;
 import com.schibsted.server.view.dto.APIResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -29,7 +30,7 @@ public class UserApiHandler extends AbstractBaseHandler {
 	
 		String username = he.getPrincipal().getUsername();
 		String method = he.getRequestMethod();
-		String body  = convertStreamToString(he.getRequestBody(), "UTF-8");
+		String body  = StreamUtils.convertInputStreamToString(he.getRequestBody(), StreamUtils.UTF_8);
 		//First off, handle authorization
 		if(!isOperationAllowedForUser(username,method,validRole))
 			he.sendResponseHeaders(HttpStatus.UNAUTHORIZED.value(), -1L);
