@@ -52,7 +52,7 @@ public class User {
 	}
 	
 	public boolean isAdmin() {
-		return false;
+		return hasRole(Role.ADMIN);
 	}
 	
 	public boolean hasRole(Role role){

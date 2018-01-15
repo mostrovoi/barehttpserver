@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.schibsted.server.dao.UserDao;
 import com.schibsted.server.domain.User;
 import com.schibsted.server.domain.User.Role;
@@ -13,6 +16,7 @@ import com.schibsted.server.service.UsernameNotFoundException;
 
 public class UserDaoImpl implements UserDao {
 
+	  private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 	  private final Map<String, User> users;
 
 	  public UserDaoImpl() {
@@ -36,11 +40,15 @@ public class UserDaoImpl implements UserDao {
 	  
 	  @Override
 	  public User get(String username) {
-		  return users.get(username);
+		  User u  = users.get(username);
+		  if(u == null)
+			 logger.warn("Username {} not found", username);
+		  return u;
 	  }
 	  
 	  @Override
-	  public boolean delete(User u) {
+	  public boolean delete(User u) throws UsernameNotFoundException {
+		  checkIfExists(u);
 		  User deletedUser = users.remove(u.getUsername());
 		  if(deletedUser == null)
 			  return false;
@@ -57,9 +65,12 @@ public class UserDaoImpl implements UserDao {
 	  
 	  @Override
 	  public void update(User u) throws UsernameNotFoundException {
-		  if (this.get(u.getUsername()) == null)
+		   checkIfExists(u);	
+		   users.put(u.getUsername(), u);
+	  }
+	  
+	  private void checkIfExists(User u) throws UsernameNotFoundException {
+		  if (u == null || this.get(u.getUsername()) == null)
 			  throw new UsernameNotFoundException("User with username "+u.getUsername()+" not found");
-		  else
-			  users.put(u.getUsername(), u);
 	  }
 }

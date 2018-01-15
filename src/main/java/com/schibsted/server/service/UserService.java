@@ -18,11 +18,9 @@ public interface UserService {
 	 * 
 	 * @param username
 	 *            the username for the user
-	 * @return User a populated user object
-	 * @throws UserNameNotFoundException
-	 *             exception thrown when user not found
+	 * @return User a populated user object, null if nothing is found
 	 */
-	User getUserByUsername(String username) throws UsernameNotFoundException;
+	User getUserByUsername(String username);
 
 	/**
 	 * Retrieves a list of all users.
@@ -49,7 +47,9 @@ public interface UserService {
 	 * 
 	 * @param username
 	 *            the username
-	 * @return
+	 * @return true if deleted, false otherwise
+	 * @throws UserNameNotFoundException
+	 *             exception thrown when user not found
 	 */
 	boolean delete(String username) throws UsernameNotFoundException;
 

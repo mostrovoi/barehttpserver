@@ -34,6 +34,6 @@ public class Session {
     
     public boolean isValid() {
         long timeSession = System.currentTimeMillis() - this.getTime() - this.getExpirationTime();
-        return (timeSession > 0);
+        return (timeSession < 0);
     }
 }

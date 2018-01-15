@@ -10,41 +10,40 @@ public class SessionServiceImpl implements SessionService {
 
     private final ConcurrentHashMap<String, Session> sessionMap = new ConcurrentHashMap<String, Session>();
     
-   //TODO: check if null
 	@Override
-	public String create(String username) {
-        Session session = new Session(UUID.randomUUID().toString(), username);
-        sessionMap.put(username, session);
-        return session.getToken();
+	public Session create(String username) {
+		String sessionId = generateUniqueToken();
+        Session session = new Session(sessionId, username);
+        sessionMap.put(sessionId, session);
+        return session;
     }
 
 	@Override
-	public String get(String username) {
-		Session s = sessionMap.get(username); 
-		return (s!=null) ? s.getToken() : null;
+	public Session get(String sessionId) {
+		return (sessionId == null) ? null : sessionMap.get(sessionId); 
 	}
 
-
 	@Override
-	public void delete(String username) {
-        sessionMap.remove(username);
+	public void delete(String sessionId) {
+        sessionMap.remove(sessionId);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public boolean isValid(String username) {
-		boolean result = true;
-		Session s = sessionMap.get(username);
-		if(s!=null) {
-			if (!s.isValid()) {
-				this.delete(username);
-				result = false;
-			}
-		} else {
-			this.create(username);
+	public boolean isValid(String sessionId) {
+		Session s = sessionMap.get(sessionId);
+		if (s != null && s.isValid())
+			return true;
+		else {
+			this.delete(sessionId);
+			return false;
 		}
-		return result;
+	}
+	
+	/*
+	 * Generates an 'almost' unique number
+	 * @see https://stackoverflow.com/questions/20999792/does-randomuuid-give-a-unique-id
+	 */
+	private String generateUniqueToken() {
+		return UUID.randomUUID().toString();
 	}
 }

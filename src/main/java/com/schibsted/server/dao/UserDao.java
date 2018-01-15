@@ -30,8 +30,10 @@ public interface UserDao {
 	 * @param u
 	 *            the user to be deleted
 	 * @return true if deleted, false if not found or failed to delete
+	 * @throws UsernameNotFoundException
+	 *             if the username cannot be found
 	 */
-	boolean delete(User u);
+	boolean delete(User u) throws UsernameNotFoundException;
 
 	/**
 	 * Adds a new user

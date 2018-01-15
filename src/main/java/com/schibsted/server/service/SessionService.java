@@ -1,22 +1,31 @@
 package com.schibsted.server.service;
 
+import com.schibsted.server.domain.Session;
+
 public interface SessionService {
 
-	String create(String username);
-
-	String get(String username);
-
-	void delete(String username);
-	
 	/**
-	 * Checks whether a session for a given username has expired in case it exists.
-	 * If the session is no longer valid, gets removed
-	 * If the session is not found, creates a new session for the user
-	 * There is 1-to-1  mapping username-valid session 
+	 * Creates a news session from given username
 	 * 
-	 * @param username attached to the session.
-	 * @return true if session was not created or has not expired yet, false if session is found and expired
+	 * @param username
+	 *            the username to be associated with the newly creatd session
+	 * 
+	 * @return Session new session
 	 */
-	boolean isValid(String username);
+	Session create(String username);
+
+	Session get(String sessionId);
+
+	void delete(String sessionId);
+
+	/**
+	 * Checks whether session is still valid and removes it if no longer valid
+	 * 
+	 * @param sessionId
+	 *            the session id to be checked
+	 * 
+	 * @return true if still valid, false otherwise
+	 */
+	boolean isValid(String sessionId);
 
 }

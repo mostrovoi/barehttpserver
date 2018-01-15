@@ -23,12 +23,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByUsername(String username) throws UsernameNotFoundException {
-		User u = users.get(username);
-		if (u == null)
-			throw new UsernameNotFoundException("username " + username + " not found");
-		else
-			return u;
+	public User getUserByUsername(String username) {
+		return users.get(username);
 	}
 
 	@Override
@@ -38,26 +34,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean checkCredentials(String username, String password) {
-		User user;
-		try {
-			user = this.getUserByUsername(username);
-		} catch (UsernameNotFoundException e) {
-			logger.warn("Username {} not found", username);
-			return false;
-		}
-		return user.authenticate(password);
+		User user = this.getUserByUsername(username);
+		return (user == null) ? false : user.authenticate(password); 
 	}
 
 	@Override
 	public boolean hasUserRole(String username, Role role) {
-		User user;
-		try {
-			user = this.getUserByUsername(username);
-		} catch (UsernameNotFoundException e) {
-			logger.warn("Username {} not found", username);
-			return false;
-		}
-		return user.hasRole(role);
+		User user = this.getUserByUsername(username);
+		return (user == null) ? false : user.hasRole(role); 
 	}
 
 	@Override

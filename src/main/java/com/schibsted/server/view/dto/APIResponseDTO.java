@@ -1,4 +1,4 @@
-package com.schibsted.server.view.rest;
+package com.schibsted.server.view.dto;
 
 public class APIResponseDTO {
 

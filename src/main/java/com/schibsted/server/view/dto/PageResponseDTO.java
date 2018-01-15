@@ -1,29 +1,29 @@
-package com.schibsted.server.utils;
+package com.schibsted.server.view.dto;
 
 /**
  * TODO: JAVADOC
  * @author operezdo
  *
  */
-public class PageTemplate {
+public class PageResponseDTO {
 
 	private String title;
 	private String username;
     private String error;
     
-    public PageTemplate() {    	
+    public PageResponseDTO() {    	
     }
 
-    public PageTemplate(String title) {
+    public PageResponseDTO(String title) {
     	this.title = title;
     }
     
-    public PageTemplate(String title, String username) {
+    public PageResponseDTO(String title, String username) {
     	this(title);
     	this.username = username;
     }
     
-    public PageTemplate(String title, String username, String errorDescription) {
+    public PageResponseDTO(String title, String username, String errorDescription) {
     	this(title,username);
     	this.error = errorDescription;
     }

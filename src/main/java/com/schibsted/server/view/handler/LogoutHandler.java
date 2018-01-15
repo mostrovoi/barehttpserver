@@ -2,34 +2,28 @@ package com.schibsted.server.view.handler;
 
 import java.io.IOException;
 
-import org.apache.http.HttpStatus;
-
+import com.schibsted.server.CustomHttpServer;
 import com.schibsted.server.service.SessionService;
-import com.schibsted.server.utils.HttpServerUtils;
-import com.schibsted.server.utils.PageTemplate;
-import com.schibsted.server.utils.ViewBuilder;
+import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
-public class LogoutHandler implements HttpHandler {
-   
+public class LogoutHandler extends AbstractBaseHandler {
+
 	private static final String LOGOUT_TEMPLATE_NAME = "logout.mustache";
 	private final SessionService sessionService;
 
-    public LogoutHandler(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
+	public LogoutHandler(SessionService sessionService) {
+		this.sessionService = sessionService;
+	}
 
-    /**
-     * @inheritDoc
-     */
-    @Override
-    public void handle(HttpExchange he) throws IOException {
-        String username = he.getPrincipal().getUsername();
+	@Override
+	public void handle(HttpExchange he) throws IOException {
+		String sessionId = getCurrentSessionId(he);
 
-       // sessionService.delete(username);
-        
-        String loginForm = ViewBuilder.create(LOGOUT_TEMPLATE_NAME, new PageTemplate("Logout"));
-        HttpServerUtils.send(he, loginForm, HttpStatus.SC_OK);
-    }
+		sessionService.delete(sessionId);
+		//Removes the cookie
+	    he.getResponseHeaders().add("Set-Cookie",CustomHttpServer.SESSION_KEY+"=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT");
+		String loginForm = createHtml(LOGOUT_TEMPLATE_NAME, new PageResponseDTO("Logout"));
+		sendOK(he, loginForm);
+	}
 }

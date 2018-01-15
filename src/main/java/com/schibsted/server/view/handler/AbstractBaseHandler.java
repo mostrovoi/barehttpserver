@@ -1,0 +1,67 @@
+package com.schibsted.server.view.handler;
+
+import static com.danisola.restify.url.RestParserFactory.parser;
+import static com.danisola.restify.url.types.StrVar.strVar;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringWriter;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.danisola.restify.url.RestParser;
+import com.danisola.restify.url.RestUrl;
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+import com.schibsted.server.CustomHttpServer;
+import com.schibsted.server.utils.HttpStatus;
+import com.schibsted.server.view.dto.PageResponseDTO;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+abstract class AbstractBaseHandler implements HttpHandler {
+
+	final static String ALPHANUMERIC_REGEXP = "^[a-zA-Z0-9]*$";
+	static final Logger logger = LogManager.getLogger(AbstractBaseHandler.class);
+	
+    protected void send(HttpExchange he, String response, int statuscode) throws IOException {
+        he.sendResponseHeaders(statuscode, response.length());
+        OutputStream os = he.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+    
+    protected void sendOK(HttpExchange he, String response) throws IOException {
+    	this.send(he, response, HttpStatus.OK.value());
+    }
+    
+    protected String convertStreamToString(java.io.InputStream is, String charset) {
+	    java.util.Scanner s = new java.util.Scanner(is,charset).useDelimiter("\\A");
+	    return s.hasNext() ? s.next() : "";
+	}
+	
+    protected String createHtml(String templateName, PageResponseDTO pageTemplate) throws IOException {
+		MustacheFactory mf = new DefaultMustacheFactory();
+		Mustache mustache = mf.compile(templateName);
+		StringWriter writer = new StringWriter();
+		mustache.execute(writer, pageTemplate).flush();
+		return writer.toString();
+	}
+    
+    protected String getUsernameFromPath(String url, String context) {
+		RestParser parser = parser(context+"/{}", strVar("username",ALPHANUMERIC_REGEXP));
+		RestUrl restUrl = parser.parse(url);
+		return restUrl.variable("username");
+	}
+    protected String getLoggedUsername(HttpExchange he) {
+    	Object username = he.getAttribute(CustomHttpServer.USERNAME_ATTRIBUTE);
+    	return username != null ? (String)username : null;
+    }
+    
+    protected String getCurrentSessionId(HttpExchange he) {
+    	Object sessionId = he.getAttribute(CustomHttpServer.SESSION_ATTRIBUTE);
+    	return sessionId != null ? (String)sessionId : null;
+    }
+}
