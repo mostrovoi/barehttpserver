@@ -1,6 +1,6 @@
 package com.schibsted.server;
 
-import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager; 
 import org.apache.logging.log4j.Logger;
 
 import com.schibsted.server.auth.CustomAuthenticator;
@@ -10,7 +10,7 @@ import com.schibsted.server.filter.RedirectFilter;
 import com.schibsted.server.filter.SessionFilter;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.service.UserService;
-import com.schibsted.server.service.impl.SessionServiceImpl;
+import com.schibsted.server.service.impl.SessionGuavaServiceImpl;
 import com.schibsted.server.service.impl.UserServiceImpl;
 import com.schibsted.server.view.handler.IndexPageHandler;
 import com.schibsted.server.view.handler.LoginHandler;
@@ -26,7 +26,7 @@ public class App {
   public static void main(String[] args) throws Exception {
 	  
 	  final UserService userService = new UserServiceImpl();
-      final SessionService sessionService = new SessionServiceImpl();
+      final SessionService sessionService = new SessionGuavaServiceImpl();
 	  final CustomHttpServer myServer =  new CustomHttpServer();
 
 	  final String loginUrl = myServer.getUrl() + "/login";
@@ -37,7 +37,7 @@ public class App {
 	  final RedirectFilter redirectFilter = new RedirectFilter(loginUrl);
 	  final AuthenticationFilter authFilter = new AuthenticationFilter(sessionService,userService);
 	 
-	  myServer.createContextWithFilters("/login", new LoginHandler(), sessionFilter, authFilter, redirectFilter);
+	  myServer.createContextWithFilters("/login", new LoginHandler(), sessionFilter, authFilter);
 	  myServer.createContextWithFilters("/index", new IndexPageHandler(), sessionFilter, redirectFilter);
 	  myServer.createContextWithFilters("/page1", new PageHandler(userService, Role.PAGE_1), sessionFilter, redirectFilter);
 	  myServer.createContextWithFilters("/page2", new PageHandler(userService, Role.PAGE_2), sessionFilter, redirectFilter);

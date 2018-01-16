@@ -7,12 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.schibsted.server.CustomHttpServer;
-import com.schibsted.server.domain.Session;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.service.UserService;
 import com.schibsted.server.utils.HttpExchangeUtil;
-import com.schibsted.server.utils.HttpStatus;
-import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -47,9 +44,9 @@ public class AuthenticationFilter extends Filter {
 	    	}
         	logger.debug("Hello 5");
 	        if (userService.checkCredentials(username, password)) {
-	    	    Session s = sessionService.create(username);
-	            httpExchange.setAttribute(CustomHttpServer.USERNAME_ATTRIBUTE, s.getUsername());       
-	            httpExchange.setAttribute(CustomHttpServer.SESSION_ATTRIBUTE, s.getToken());
+	    	    String sessionid = sessionService.create(username);
+	            httpExchange.setAttribute(CustomHttpServer.USERNAME_ATTRIBUTE, username);       
+	            httpExchange.setAttribute(CustomHttpServer.SESSION_ATTRIBUTE, sessionid);
 				logger.debug("User {} logged in", username);
 	            chain.doFilter(httpExchange);
 	        } else {

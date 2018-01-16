@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.schibsted.server.CustomHttpServer;
-import com.schibsted.server.domain.Session;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.utils.HttpExchangeUtil;
 import com.sun.net.httpserver.Filter;
@@ -24,16 +23,22 @@ public class SessionFilter extends Filter {
 
     @Override
     public void doFilter(HttpExchange httpExchange, Chain chain) throws IOException {
-        String sessionToken = HttpExchangeUtil.getSessionIdFromCookies(httpExchange);
-        Session s = sessionService.get(sessionToken);
-        if (s!=null && sessionService.isValid(s.getToken()) ) { 	
-        	logger.debug("Session found for username {}",s.getUsername());
-            httpExchange.setAttribute(CustomHttpServer.USERNAME_ATTRIBUTE, s.getUsername());       
-            httpExchange.setAttribute(CustomHttpServer.SESSION_ATTRIBUTE, s.getToken());
-            chain.doFilter(httpExchange);
+        String sessionId = HttpExchangeUtil.getSessionIdFromCookies(httpExchange);
+        if(sessionId != null) {
+	        String username = sessionService.getUsername(sessionId);
+	        if (sessionService.isValid(sessionId) ) { 	
+	        	logger.debug("Session found for username {}",username);
+	            httpExchange.setAttribute(CustomHttpServer.USERNAME_ATTRIBUTE, username);       
+	            httpExchange.setAttribute(CustomHttpServer.SESSION_ATTRIBUTE, sessionId);
+	            chain.doFilter(httpExchange);
+	        } else {
+	            chain.doFilter(httpExchange);
+	        }
         } else {
             chain.doFilter(httpExchange);
         }
+        
+        
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.schibsted.server.service;
 
-import com.schibsted.server.domain.Session;
-
 public interface SessionService {
 
 	/**
@@ -10,16 +8,29 @@ public interface SessionService {
 	 * @param username
 	 *            the username to be associated with the newly creatd session
 	 * 
-	 * @return Session new session
+	 * @return String new sessionId
 	 */
-	Session create(String username);
+	String create(String username);
 
-	Session get(String sessionId);
+	/**
+	 * Gets the username for the given session if exists
+	 * 
+	 * @param sessionId
+	 *            session to be looked up
+	 * @return username if found, null otherwise
+	 */
+	String getUsername(String sessionId);
 
+	/**
+	 * Invalidates the session associated to this sessionId if exists
+	 * 
+	 * @param sessionId
+	 *            the session to be removed
+	 */
 	void delete(String sessionId);
 
 	/**
-	 * Checks whether session is still valid and removes it if no longer valid
+	 * Checks whether session is still valid, i.e. has associated user
 	 * 
 	 * @param sessionId
 	 *            the session id to be checked
