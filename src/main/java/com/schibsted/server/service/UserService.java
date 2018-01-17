@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.schibsted.server.domain.User;
 import com.schibsted.server.domain.User.Role;
+import com.schibsted.server.exception.UserExistsException;
+import com.schibsted.server.exception.UsernameNotFoundException;
 
 /**
  * Business service interface to handle communication between web and
@@ -40,6 +42,15 @@ public interface UserService {
 	 */
 	boolean hasUserRole(String username, Role role);
 
+	/**
+	 * Tries to authenticate the user against the system
+	 * 
+	 * @param username
+	 *            username to be checked
+	 * @param password
+	 *            password to be checked
+	 * @return true if authentication succeeds, false otherwise
+	 */
 	boolean checkCredentials(String username, String password);
 
 	/**
@@ -72,7 +83,7 @@ public interface UserService {
 	 * @param user
 	 *            the user's information
 	 * @throws UserNotFoundException
-	 *             thrown if user with same username is not found
+	 *             thrown if username of this user cannot not found
 	 * @return user the new user object
 	 * @throws UserNameNotFoundException
 	 *             exception thrown when user not found

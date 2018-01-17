@@ -1,35 +1,51 @@
 package com.schibsted.server.domain;
 
-import java.util.ArrayList;
+import java.util.ArrayList;  
 import java.util.Arrays;
 import java.util.List;
 
+import com.schibsted.server.exception.ValidationException;
+
 public class User {
 
+	private final static String VALID_USERNAME_PATTERN  = "^[a-z0-9]+$";
+	
 	public enum Role {
-	    PAGE_1,
-	    PAGE_2,
-	    PAGE_3,
-	    ADMIN
+	    PAGE_1("page1"),
+	    PAGE_2("page2"),
+	    PAGE_3("page3"),
+	    ADMIN("admin");
+		
+		private final String name;       
+
+	    private Role(String s) {
+	        name = s;
+	    }
+		public String toString() {
+			return this.name;
+		}
 	}
 	
-	private String username;
-	private List<Role> roles;
+	private final String username;
+	private final List<Role> roles = new ArrayList<Role>();
 	private String password;
 	
-    public User(String userName, String password, Role... roles) {
-        this.username = userName;
-        this.password = password;
-        this.roles = new ArrayList<Role>();
-        this.roles.addAll(Arrays.asList(roles));
+    public User(String username, String password) throws ValidationException {
+    	validateUsername(username);
+        this.username = username;
+        this.setPassword(password);
+    }  
+	
+    public User(String username, String password, Role... roles) throws ValidationException {
+        this(username,password);
+    	if(roles != null) 
+	        this.roles.addAll(Arrays.asList(roles));
     }
 
 	public String getUsername() {
 		return username;
 	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -41,13 +57,14 @@ public class User {
 	 * @param roles
 	 */
 	public void setRoles(List<Role> roles) {
-		if(roles == null )
-			this.roles.clear();
-		else
-			this.roles = roles;
+		this.roles.clear();
+		if(roles != null ) 
+			this.roles.addAll(roles);
 	}
 	
-	public void setPassword(String password) {
+	public void setPassword(String password) throws ValidationException {
+		if(password == null)
+			throw new ValidationException("Null password is not valid");
 		this.password = password;
 	}
 	
@@ -66,10 +83,11 @@ public class User {
 			return false;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * hashCode method based on the assumption that username is unique
-	 */
+	private void validateUsername(String username) throws ValidationException {
+    	if(username == null  || !username.matches(VALID_USERNAME_PATTERN))
+    		throw new ValidationException("Username not valid:"+username);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -103,7 +121,15 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", roles=" + roles + "]";
+		StringBuffer sb = new StringBuffer();
+		if(roles != null) {
+			for(Role r : roles){
+				sb.append("["+r.toString()+"] ");
+			}
+		}
+		else 
+			sb.append("-");
+		return "User [username=" + username + ", roles=" + sb.toString() + "]";
 	}
 	
 }

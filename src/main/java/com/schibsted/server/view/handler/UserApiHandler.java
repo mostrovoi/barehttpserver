@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.schibsted.server.domain.User.Role;
+import com.schibsted.server.exception.UsernameNotFoundException;
 import com.schibsted.server.service.UserService;
-import com.schibsted.server.service.UsernameNotFoundException;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.utils.RequestMethod;
 import com.schibsted.server.utils.StreamUtils;

@@ -1,4 +1,4 @@
-package com.schibsted.server.service;
+package com.schibsted.server.exception;
 
 /**
  * Checked exception thrown when a username exists already

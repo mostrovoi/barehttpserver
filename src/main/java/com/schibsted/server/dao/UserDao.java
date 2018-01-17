@@ -3,8 +3,8 @@ package com.schibsted.server.dao;
 import java.util.List;
 
 import com.schibsted.server.domain.User;
-import com.schibsted.server.service.UserExistsException;
-import com.schibsted.server.service.UsernameNotFoundException;
+import com.schibsted.server.exception.UserExistsException;
+import com.schibsted.server.exception.UsernameNotFoundException;
 
 public interface UserDao {
 

@@ -9,9 +9,9 @@ import com.schibsted.server.dao.UserDao;
 import com.schibsted.server.dao.impl.UserDaoImpl;
 import com.schibsted.server.domain.User;
 import com.schibsted.server.domain.User.Role;
-import com.schibsted.server.service.UserExistsException;
+import com.schibsted.server.exception.UserExistsException;
+import com.schibsted.server.exception.UsernameNotFoundException;
 import com.schibsted.server.service.UserService;
-import com.schibsted.server.service.UsernameNotFoundException;
 
 public class UserServiceImpl implements UserService {
 

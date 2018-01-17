@@ -1,17 +1,32 @@
 package com.schibsted.server.domain;
 
-import spock.lang.Specification;
+import spock.lang.Specification; 
+
 import com.schibsted.server.domain.User;
+import com.schibsted.server.exception.ValidationException;
 import static com.schibsted.server.domain.User.Role;
 
 class UserSpec extends Specification {
 
-	def "A new user with null roles should throw a NullPointerException"() {
+	def "A new user with no roles parameter should contain no roles"() {
 		when:
-			User u = new User("aaaa","bbb",null);
+			User u = new User("aaaa","bbb")
 		then:
-			thrown NullPointerException;
+			u.getRoles().isEmpty()
 	}
+	
+	def "A new user with invalid username throws exception"() {
+		when: 
+			User u = new User(username, password)
+		then:
+			thrown(expectedException)
+		where:
+		username  |  password || expectedException
+		  "AAA"   |   "bbb"   || ValidationException
+		  "%fdas" |   "bbb"   || ValidationException
+		  null    |   "bbb"   || ValidationException
+		  "aaa"   |   null    || ValidationException
+ 	}
 	
 	def "A  user with roles set should return the new roles"() {
 		when: 

@@ -13,14 +13,14 @@ import com.schibsted.server.utils.HttpExchangeUtil;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
-public class AuthenticationFilter extends Filter {
+public class FormParamsFilter extends Filter {
 
     private final SessionService sessionService;
     private final UserService userService;
 
-	private static final Logger logger = LogManager.getLogger(AuthenticationFilter.class);
+	private static final Logger logger = LogManager.getLogger(FormParamsFilter.class);
 	
-    public AuthenticationFilter(SessionService ss, UserService us) {
+    public FormParamsFilter(SessionService ss, UserService us) {
         this.sessionService = ss;
         this.userService = us;
     }
@@ -59,7 +59,7 @@ public class AuthenticationFilter extends Filter {
 
     @Override
     public String description() {
-        return "Authentication filter";
+        return "Extracts username and password from form parameters and validates those. If successful, sets username as attribute";
     }
 
 

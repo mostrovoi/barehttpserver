@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.schibsted.server.auth.CustomAuthenticator;
 import com.schibsted.server.domain.User.Role;
-import com.schibsted.server.filter.AuthenticationFilter;
+import com.schibsted.server.filter.FormParamsFilter;
 import com.schibsted.server.filter.RedirectFilter;
 import com.schibsted.server.filter.SessionFilter;
 import com.schibsted.server.service.SessionService;
@@ -35,9 +35,9 @@ public class App {
 	  
 	  final SessionFilter sessionFilter = new SessionFilter(sessionService);
 	  final RedirectFilter redirectFilter = new RedirectFilter(loginUrl);
-	  final AuthenticationFilter authFilter = new AuthenticationFilter(sessionService,userService);
+	  final FormParamsFilter paramsFilter = new FormParamsFilter(sessionService,userService);
 	 
-	  myServer.createContextWithFilters("/login", new LoginHandler(), sessionFilter, authFilter);
+	  myServer.createContextWithFilters("/login", new LoginHandler(), sessionFilter, paramsFilter);
 	  myServer.createContextWithFilters("/index", new IndexPageHandler(), sessionFilter, redirectFilter);
 	  myServer.createContextWithFilters("/page1", new PageHandler(userService, Role.PAGE_1), sessionFilter, redirectFilter);
 	  myServer.createContextWithFilters("/page2", new PageHandler(userService, Role.PAGE_2), sessionFilter, redirectFilter);
