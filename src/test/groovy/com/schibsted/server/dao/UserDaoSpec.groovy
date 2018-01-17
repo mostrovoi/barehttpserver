@@ -34,23 +34,23 @@ class UserDaoSpec extends Specification {
 			userDao.get(u.getUsername()).getPassword() == "bravito"
 	}
 	
-	def "Create 2 users with same username and update should only create 1 user" {
+	def "Create 2 users with same username and update should only create 1 user"() {
 		
 	}
 	
-	def "Delete one user should return null " {
+	def "Delete one user should return null "() {
 		
 	}
 	
-	def "Add 1 user with username already existing should throw UserExistException" {
+	def "Add 1 user with username already existing should throw UserExistException"() {
 		
 	}
 	
-	def "Update one user with non existing username should throw UsernameNotFoundException" {
+	def "Update one user with non existing username should throw UsernameNotFoundException"() {
 		
 	}
 	
-	def "Updating roles for one user should return new roles" {
+	def "Updating roles for one user should return new roles"() {
 		
 	}
 	
