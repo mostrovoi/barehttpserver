@@ -19,7 +19,8 @@ public class LogoutHandler extends AbstractBaseHandler {
 	@Override
 	public void handle(HttpExchange he) throws IOException {
 		String sessionId = getCurrentSessionId(he);
-
+		String username =  this.getLoggedUsername(he);
+		logger.info("User {} with sessionId {} has been logged out",username,sessionId);
 		//Removes the cookie in both browser and server
 		sessionService.delete(sessionId);
 		//TODO: move to helper
