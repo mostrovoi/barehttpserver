@@ -98,4 +98,11 @@ class UserSpec extends Specification {
 			!u1.equals(u2);
 	}
 	
+	def "Method toString of user should return correct representation of object"() {
+		when:
+			User u1 = new User("perrito","bbb",Role.PAGE_1,Role.PAGE_2)
+		then:
+		   "User [username=perrito, roles=[page1] [page2] ]".equals(u1.toString());
+	}
+	
 }
