@@ -32,14 +32,18 @@ public class UserApiHandler extends AbstractBaseHandler {
 		String method = he.getRequestMethod();
 		String body  = StreamUtils.convertInputStreamToString(he.getRequestBody(), StreamUtils.UTF_8);
 		//First off, handle authorization
-		if(!isOperationAllowedForUser(username,method,validRole))
+		if(!isOperationAllowedForUser(username,method,validRole)) {
 			he.sendResponseHeaders(HttpStatus.UNAUTHORIZED.value(), -1L);
+			he.close();
+		}
 			
 		//Parse URL
 		String requestedUsername = getUsernameFromPath(path, USERS_PATH);
 		if(requestedUsername != null) {
-			if( userService.getUserByUsername(requestedUsername) == null)
+			if( userService.getUserByUsername(requestedUsername) == null) {
 				he.sendResponseHeaders(HttpStatus.NOT_FOUND.value(), -1L);
+				he.close();
+			}
 		}
 		
 		switch(RequestMethod.valueOf(method)) {
@@ -63,6 +67,7 @@ public class UserApiHandler extends AbstractBaseHandler {
 			case HEAD:
 			default:
 				he.sendResponseHeaders(HttpStatus.METHOD_NOT_ALLOWED.value(),-1L);
+				he.close();
 				break;
 		}
 

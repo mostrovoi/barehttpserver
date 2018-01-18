@@ -24,7 +24,7 @@ public class App {
   private static final Logger logger = LogManager.getLogger(App.class);
 	  
   public static void main(String[] args) throws Exception {
-	  
+	  try {
 	  final UserService userService = new UserServiceImpl();
       final SessionService sessionService = new SessionGuavaServiceImpl();
 	  final CustomHttpServer myServer =  new CustomHttpServer();
@@ -47,6 +47,10 @@ public class App {
 	  myServer.start();
 	  logger.info("Server started in {}", myServer.getUrl());
 	  logger.info("Start by logging in at {}",loginUrl);
+	  }
+  catch(Exception e) {
+	  logger.error("error!!");
   }
+	  }
 
 }

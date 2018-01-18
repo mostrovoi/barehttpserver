@@ -27,33 +27,27 @@ public class FormParamsFilter extends Filter {
 
     @Override
     public void doFilter(HttpExchange httpExchange, Chain chain) throws IOException {
-    	//if valid session has been found already
-    	if(httpExchange.getAttribute(CustomHttpServer.USERNAME_ATTRIBUTE) != null) {
-    		chain.doFilter(httpExchange);
-    	}
-    	else {
-        	logger.debug("Hello 3");
+		httpExchange.setAttribute(CustomHttpServer.LOGIN_ERROR_ATTRIBUTE, "0");   
+    	//if no valid session has been found already
+		if(httpExchange.getAttribute(CustomHttpServer.USERNAME_ATTRIBUTE) == null) {
 	    	Map<String,String> params = HttpExchangeUtil.getFormParametersFromBody(httpExchange.getRequestBody());
-	    	//TODO: Aqui casca!
-	    	String username = null;
-	    	String password = null;
-        	logger.debug("Hello 4");
 	    	if(params != null) {
-	    		username = params.get("username");
-	    		password = params.get("password");
-	    	}
-        	logger.debug("Hello 5");
-	        if (userService.checkCredentials(username, password)) {
-	    	    String sessionid = sessionService.create(username);
-	            httpExchange.setAttribute(CustomHttpServer.USERNAME_ATTRIBUTE, username);       
-	            httpExchange.setAttribute(CustomHttpServer.SESSION_ATTRIBUTE, sessionid);
-				logger.debug("User {} logged in", username);
-	            chain.doFilter(httpExchange);
-	        } else {
-	        	//TODO: Remove cookie / session
-	        	chain.doFilter(httpExchange);
+        		String username = params.get("username");
+	    		String password = params.get("password");
+   
+	        	if (username != null && userService.checkCredentials(username, password)) {
+		    	    String sessionid = sessionService.create(username);
+		            httpExchange.setAttribute(CustomHttpServer.USERNAME_ATTRIBUTE, username);       
+		            httpExchange.setAttribute(CustomHttpServer.SESSION_ATTRIBUTE, sessionid);
+		            httpExchange.setAttribute(CustomHttpServer.LOGIN_ERROR_ATTRIBUTE, "0"); 
+					logger.debug("User {} logged in", username);
+		        }
+	        	else
+	        	    httpExchange.setAttribute(CustomHttpServer.LOGIN_ERROR_ATTRIBUTE, "1"); 
+					
 	        }
-    	}
+	    }
+        chain.doFilter(httpExchange);	
     }
 
 

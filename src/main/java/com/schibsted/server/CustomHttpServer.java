@@ -18,9 +18,11 @@ public class CustomHttpServer {
     private static final int PORT = 8080;
     private static final String URL = "http://127.0.0.1:";
     public static final String SESSION_KEY = "JSESSIONID";
-    
+    public static final String REDIRECT_PARAMETER = "inc";
     public static final String USERNAME_ATTRIBUTE = "username";
     public static final String SESSION_ATTRIBUTE = "sessionid";
+    public static final String LOGIN_ERROR_ATTRIBUTE = "loginerror";
+    
   
     public CustomHttpServer() throws IOException {
     	server = HttpServer.create(new InetSocketAddress(PORT), 0);

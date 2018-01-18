@@ -32,6 +32,7 @@ abstract class AbstractBaseHandler implements HttpHandler {
         OutputStream os = he.getResponseBody();
         os.write(response.getBytes());
         os.close();
+        he.close();
     }
     
     protected void sendOK(HttpExchange he, String response) throws IOException {
