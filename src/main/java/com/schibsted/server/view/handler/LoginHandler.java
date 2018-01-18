@@ -19,6 +19,7 @@ public class LoginHandler extends AbstractBaseHandler {
 	@Override
 	public void handle(HttpExchange he) throws IOException {
 		//3 cases -> First landing, Wrong credentials and got valid credentials 
+	    logger.debug("dddf: {}",he.getRequestURI()	);
 		String username = getLoggedUsername(he);
 		if(username == null) {
 			String errorMsg = "";
@@ -29,14 +30,12 @@ public class LoginHandler extends AbstractBaseHandler {
 		}
 		else {
 			String sessionId = getCurrentSessionId(he);
-		    he.getResponseHeaders().add("Set-Cookie",CustomHttpServer.SESSION_KEY+"="+sessionId);
+		    he.getResponseHeaders().add("Set-Cookie",CustomHttpServer.SESSION_KEY+"="+sessionId);		    
+		    String responseUrl = HttpExchangeUtil.parseRequestQuery("inc", he.getRequestURI().toString());
+		    logger.debug("dddf: {}",he.getRequestURI().toString());
+		    logger.debug("dddf: {}",he.getRequestURI()	);
 		    
-		    String redirectUrl = HttpExchangeUtil.parseRequestQuery(CustomHttpServer.REDIRECT_PARAMETER,he.getRequestURI().getQuery());
-		   logger.info("REdirecturl: {}",he.getRequestURI().getQuery());
-		    //TODO: here we could validate redirectUrl
-		    if(redirectUrl == null)
-		    	redirectUrl = "index";
-		    he.getResponseHeaders().add(LOCATION_HEADER, redirectUrl);
+		    he.getResponseHeaders().add(LOCATION_HEADER, "private");
 		    he.sendResponseHeaders(HttpStatus.SEE_OTHER.value(), -1L);
 		    he.close();
 		}
