@@ -3,10 +3,9 @@ plugins {
 }
 
 
-//apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'groovy'
-apply plugin: 'org.sonarqube'
+//apply plugin: 'org.sonarqube'
 
 
 group = 'com.schibsted.server'
@@ -58,7 +57,6 @@ jacocoTestReport {
 sonarqube {
     properties {
         property "sonar.projectName", "Bare Httpserver"
-        property "Dsonar.login", ${SONARQUBE_TOKEN}
         property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/groovy"
     }
