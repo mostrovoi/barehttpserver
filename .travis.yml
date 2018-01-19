@@ -1,16 +1,13 @@
 language: java
 jdk:
   - oraclejdk8
-script:
-  gradle test
 
 addons:
   sonarcloud:
     organization: "mostrovoi-github"
 
 script:
-  # JaCoCo is used to have code coverage, the agent has to be activated
-  - gradle sonarqube -Dsonar.login=${SONARQUBE_TOKEN}
+  gradle sonarqube -Dsonar.login=${SONARQUBE_TOKEN}
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
