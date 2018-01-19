@@ -7,7 +7,7 @@ addons:
     organization: "mostrovoi-github"
 
 script:
-  gradle sonarqube -Dsonar.login=${SONARQUBE_TOKEN}
+  gradle sonarqube 
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

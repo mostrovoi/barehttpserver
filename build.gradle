@@ -1,5 +1,5 @@
 plugins {
-    id "org.sonarqube" version "2.5"
+    id "org.sonarqube" version "2.6.1"
 }
 
 
@@ -57,7 +57,7 @@ jacocoTestReport {
 sonarqube {
     properties {
         property "sonar.projectName", "Bare Httpserver"
-        property "sonar.projectKey", "com.sonarqube.examples.java-gradle-travis-project"
+        property "Dsonar.login", ${SONARQUBE_TOKEN}
         property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/groovy"
     }
