@@ -6,6 +6,7 @@ plugins {
 //apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'groovy'
+apply plugin: 'org.sonarqube'
 
 
 group = 'com.schibsted.server'
