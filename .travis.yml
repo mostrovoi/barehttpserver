@@ -1,5 +1,4 @@
 language: java
-sudo: false
 jdk:
   - oraclejdk8
 script:
@@ -11,7 +10,7 @@ addons:
 
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
-  - gradlew sonarqube -Dsonar.login=${SONARQUBE_TOKEN}
+  - gradle sonarqube -Dsonar.login=${SONARQUBE_TOKEN}
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
