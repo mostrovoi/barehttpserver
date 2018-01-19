@@ -2,10 +2,8 @@ plugins {
     id "org.sonarqube" version "2.6.1"
 }
 
-
 apply plugin: 'jacoco'
 apply plugin: 'groovy'
-//apply plugin: 'org.sonarqube'
 
 
 group = 'com.schibsted.server'

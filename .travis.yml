@@ -4,10 +4,12 @@ install: true
 addons:
   sonarcloud:
     organization: "mostrovoi-github"
+    token: ${SONARQUBE_TOKEN}
+      
 jdk:
   - oraclejdk8
 script:
-  - ./gradlew sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=mostrovoi-github -Dsonar.login=${SONARQUBE_TOKEN}
+  - ./gradlew sonarqube
 cache:
   directories:
     - '$HOME/.m2/repository'
