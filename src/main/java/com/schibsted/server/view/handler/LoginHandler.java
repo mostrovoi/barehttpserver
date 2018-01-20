@@ -10,10 +10,10 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class LoginHandler extends AbstractBaseHandler {
 
-	private static final String FORM_LOGIN_TEMPLATE_NAME = "login.mustache";
+	private final static String FORM_LOGIN_TEMPLATE_NAME = "login.mustache";
 	
 	//TODO: Make it global when moving to helper
-	public static final String LOCATION_HEADER = "Location";
+	public final static String LOCATION_HEADER = "Location";
 	
 
 	@Override
