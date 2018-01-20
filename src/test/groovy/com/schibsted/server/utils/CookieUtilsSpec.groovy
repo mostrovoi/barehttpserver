@@ -32,5 +32,14 @@ class CookieUtilsSpec extends Specification {
 		then:
 			value == "val1"
 	}
+	
+	def "given a session key returns the string for sending with set-cookie header for deleting session"() {
+		given:
+			def sessionId = "JSESSIONID";
+		when:
+			def sessionDeletedStr = CookieUtilsSpec.getSetDeletedSession(sessionId)
+		then:
+			sessionDeletedStr == "JSESSIONID==deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	}
 
 }

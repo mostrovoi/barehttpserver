@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.schibsted.server.domain.User.Role;
 import com.schibsted.server.service.UserService;
+import com.schibsted.server.utils.HeadersUtil;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
@@ -27,11 +28,11 @@ public class PageHandler extends AbstractBaseHandler {
 		String username = getLoggedUsername(he);
 		if(this.userService.hasUserRole(username, validRole)) {
 	        String pageHtml = createHtml(PAGE_TEMPLATE_NAME, new PageResponseDTO("Page ",username));
-	        send(he, pageHtml,HttpStatus.OK.value());
+	        sendHtmlOK(he, pageHtml);
 		}
 		else {
 	        String errorHtml = createHtml(ERROR_TEMPLATE_NAME, new PageResponseDTO("Error",username,"Not allowed"));
-	        send(he, errorHtml,HttpStatus.FORBIDDEN.value());
+	        send(he, errorHtml,HeadersUtil.CONTENT_TYPE_HTML,HttpStatus.FORBIDDEN.value());
 	        
 		}
 	}

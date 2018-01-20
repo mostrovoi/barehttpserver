@@ -1,5 +1,7 @@
 package com.schibsted.server;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +25,7 @@ public class App {
 
 	private static final Logger logger = LogManager.getLogger(App.class);
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IOException {
 
 		final UserService userService = new UserServiceImpl();
 		final SessionService sessionService = new SessionGuavaServiceImpl();

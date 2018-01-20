@@ -16,6 +16,7 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.schibsted.server.CustomHttpServerConstants;
+import com.schibsted.server.utils.HeadersUtil;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
@@ -26,17 +27,16 @@ abstract class AbstractBaseHandler implements HttpHandler {
 	final static String ALPHANUMERIC_REGEXP = "^[a-zA-Z0-9]*$";
 	static final Logger logger = LogManager.getLogger(AbstractBaseHandler.class);
 	
-    protected void send(HttpExchange he, String response, int statuscode) throws IOException {
-       //TODO: Add content-type html or json
+    protected void send(HttpExchange he, String response, String contentType, int statuscode) throws IOException {
+    	he.getResponseHeaders().add(HeadersUtil.CONTENT_TYPE_HEADER,contentType);
     	he.sendResponseHeaders(statuscode, response.length());
         OutputStream os = he.getResponseBody();
         os.write(response.getBytes());
         os.close();
-        he.close();
     }
     
-    protected void sendOK(HttpExchange he, String response) throws IOException {
-    	this.send(he, response, HttpStatus.OK.value());
+    protected void sendHtmlOK(HttpExchange he, String response) throws IOException {
+    	this.send(he, response, HeadersUtil.CONTENT_TYPE_HTML, HttpStatus.OK.value());
     }
     
     protected String createHtml(String templateName, PageResponseDTO pageTemplate) throws IOException {

@@ -14,7 +14,7 @@ public class CustomHttpServerConstants {
     public static final String LOGIN_ERROR_ATTRIBUTE = "loginerror";
 	public static final String INC_PARAM = "inc";
 	public static final String FORM_USERNAME = "username";
-	public static final String FORM_PASSWORD = "password";
+	public static final String FORM_PASS = "password";
 	
   
 }

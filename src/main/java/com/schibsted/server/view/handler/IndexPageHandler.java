@@ -13,7 +13,7 @@ public class IndexPageHandler extends AbstractBaseHandler {
 	public void handle(HttpExchange he) throws IOException {
 		String username = getLoggedUsername(he);
 		String pageHtml = createHtml(INDEX_PAGE_TEMPLATE_NAME, new PageResponseDTO("Index",username));
-	    sendOK(he, pageHtml);
+	    sendHtmlOK(he, pageHtml);
 	}
 
 }

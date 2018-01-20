@@ -24,7 +24,7 @@ public class LoginHandler extends AbstractBaseHandler {
 			if("1".equals(he.getAttribute(CustomHttpServerConstants.LOGIN_ERROR_ATTRIBUTE)))
 				errorMsg =  "Wrong username or password";
 	    	String loginForm = createHtml(FORM_LOGIN_TEMPLATE_NAME, new PageResponseDTO("Login", "",errorMsg));
-	    	sendOK(he,loginForm);
+	    	sendHtmlOK(he,loginForm);
 		}
 		else {
 			String sessionId = getCurrentSessionId(he);

@@ -33,7 +33,7 @@ public class FormParamsFilter extends Filter {
 	    	Map<String,String> params = HttpExchangeUtil.getFormParametersFromBody(httpExchange.getRequestBody());
 	    	if(params != null) {
         		String username = params.get(CustomHttpServerConstants.FORM_USERNAME);
-	    		String password = params.get(CustomHttpServerConstants.FORM_PASSWORD);
+	    		String password = params.get(CustomHttpServerConstants.FORM_PASS);
    
 	        	if (username != null && userService.checkCredentials(username, password)) {
 		    	    String sessionid = sessionService.create(username);
