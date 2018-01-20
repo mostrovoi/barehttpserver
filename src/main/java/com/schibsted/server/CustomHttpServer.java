@@ -22,7 +22,7 @@ public class CustomHttpServer {
     	server = HttpServer.create(new InetSocketAddress(CustomHttpServerConstants.PORT), 0);
     }
     
-	public void start() throws IOException {
+	public void start() {
 		server.start();
 	}
 	

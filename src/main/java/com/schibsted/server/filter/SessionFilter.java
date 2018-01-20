@@ -33,7 +33,6 @@ public class SessionFilter extends Filter {
 		String username = sessionService.getUsername(sessionId);
 		if (sessionService.isValid(sessionId)) {
 			logger.debug("Session found for username {}", username);
-			// TODO: helper
 			httpExchange.setAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE, username);
 			httpExchange.setAttribute(CustomHttpServerConstants.SESSION_ATTRIBUTE, sessionId);
 		}

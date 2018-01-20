@@ -57,10 +57,7 @@ public class UserDaoImpl implements UserDao {
 	public boolean delete(User u) throws UsernameNotFoundException {
 		checkIfExists(u);
 		User deletedUser = users.remove(u.getUsername());
-		if (deletedUser == null)
-			return false;
-		else
-			return true;
+		return (deletedUser != null);
 	}
 
 	@Override
