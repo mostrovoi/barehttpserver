@@ -37,7 +37,7 @@ class CookieUtilsSpec extends Specification {
 		given:
 			def sessionId = "JSESSIONID";
 		when:
-			def sessionDeletedStr = CookieUtilsSpec.getSetDeletedSession(sessionId)
+			def sessionDeletedStr = CookieUtils.getSetDeletedSession(sessionId)
 		then:
 			sessionDeletedStr == "JSESSIONID==deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 	}
