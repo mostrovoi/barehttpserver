@@ -1,5 +1,9 @@
 package com.schibsted.server.view.dto;
 
+/**
+ * Transfer object for filling up REST response
+ * @author operezdo
+ */
 public class APIResponseDTO {
 
 	private int statusCode;

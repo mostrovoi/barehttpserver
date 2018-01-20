@@ -1,9 +1,8 @@
 package com.schibsted.server.view.dto;
 
 /**
- * TODO: JAVADOC
+ * Transfer object for filling up Html response pages
  * @author operezdo
- *
  */
 public class PageResponseDTO {
 

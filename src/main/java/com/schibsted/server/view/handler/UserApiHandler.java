@@ -17,7 +17,7 @@ public class UserApiHandler extends AbstractBaseHandler {
 	private final UserService userService;
 	private final Role validRole;
 
-	private final static String USERS_PATH = "/api/users/";
+	private static final String USERS_PATH = "/api/users/";
 	
 	public UserApiHandler(UserService us, Role r) {
 		this.userService = us;

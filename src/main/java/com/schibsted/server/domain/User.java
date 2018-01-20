@@ -8,7 +8,7 @@ import com.schibsted.server.exception.ValidationException;
 
 public class User {
 
-	private final static String VALID_USERNAME_PATTERN  = "^[a-z0-9]+$";
+	private static final String VALID_USERNAME_PATTERN  = "^[a-z0-9]+$";
 	
 	public enum Role {
 	    PAGE_1("page1"),
@@ -17,17 +17,19 @@ public class User {
 	    ADMIN("admin");
 		
 		private final String name;       
-
+		
 	    private Role(String s) {
 	        name = s;
 	    }
+	    
+	    @Override
 		public String toString() {
 			return this.name;
 		}
 	}
 	
 	private final String username;
-	private final List<Role> roles = new ArrayList<Role>();
+	private final List<Role> roles = new ArrayList<>();
 	private String password;
 	
     public User(String username, String password) throws ValidationException {
@@ -77,10 +79,7 @@ public class User {
 	}
 	
 	public boolean authenticate(String password) {
-		if (this.password != null && this.password.equals(password))
-			return true;
-		else
-			return false;
+	    return (this.password != null && this.password.equals(password));
 	}
 	
 	private void validateUsername(String username) throws ValidationException {
@@ -121,7 +120,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		if(roles != null) {
 			for(Role r : roles){
 				sb.append("["+r.toString()+"] ");

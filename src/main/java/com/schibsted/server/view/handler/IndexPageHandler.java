@@ -7,7 +7,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class IndexPageHandler extends AbstractBaseHandler {
 
-	private static final String INDEX_PAGE_TEMPLATE_NAME = "index.mustache";
+	private final static String INDEX_PAGE_TEMPLATE_NAME = "index.mustache";
 
 	@Override
 	public void handle(HttpExchange he) throws IOException {

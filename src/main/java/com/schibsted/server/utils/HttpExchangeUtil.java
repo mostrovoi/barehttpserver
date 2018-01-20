@@ -40,7 +40,7 @@ public class HttpExchangeUtil {
 		// application/x-www-form-urlencoded;
 		// SEE:
 		// https://www.w3.org/TR/html5/sec-forms.html#application-x-www-form-urlencoded-encoding-algorithm
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> params = new HashMap<>();
 		String input = StreamUtils.convertInputStreamToString(is, StreamUtils.UTF_8);
 
 		Pattern p = Pattern.compile("(?:(\\w*)=(\\w*)(?=&|$))");

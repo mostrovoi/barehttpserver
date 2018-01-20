@@ -9,7 +9,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class LogoutHandler extends AbstractBaseHandler {
 
-	private static final String LOGOUT_TEMPLATE_NAME = "logout.mustache";
+	private final static String LOGOUT_TEMPLATE_NAME = "logout.mustache";
 	private final SessionService sessionService;
 
 	public LogoutHandler(SessionService sessionService) {

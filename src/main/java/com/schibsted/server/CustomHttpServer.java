@@ -43,7 +43,7 @@ public class CustomHttpServer {
 	public HttpContext createContextWithFilters(String path, HttpHandler httpHandler, Filter... filter) {
 		HttpContext context = server.createContext(path, httpHandler);
 		if (filter != null) {
-	        List<Filter> filters = new ArrayList<Filter>();
+	        List<Filter> filters = new ArrayList<>();
 	        filters.addAll(Arrays.asList(filter));
 			context.getFilters().addAll(filters);
 		}

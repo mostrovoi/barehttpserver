@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
 	private final Map<String, User> users;
 
 	public UserDaoImpl() {
-		users = new HashMap<String, User>();
+		users = new HashMap<>();
 		initUsers();
 	}
 

@@ -10,8 +10,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class PageHandler extends AbstractBaseHandler {
 
-	private static final String PAGE_TEMPLATE_NAME = "page.mustache";
-	private static final String ERROR_TEMPLATE_NAME = "error.mustache";
+	private final static String PAGE_TEMPLATE_NAME = "page.mustache";
+	private final static String ERROR_TEMPLATE_NAME = "error.mustache";
 	
 	private final Role validRole;
 	private final UserService userService;
