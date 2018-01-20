@@ -5,16 +5,13 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.schibsted.server.CustomHttpServer;
+import com.schibsted.server.CustomHttpServerConstants;
+import com.schibsted.server.utils.HeadersUtil;
 import com.schibsted.server.utils.HttpStatus;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
 public class RedirectFilter extends Filter {
-
-	// TODO: Make it global
-	public static final String LOCATION_HEADER = "Location";
-	public static final String INC_PARAM = "?inc=";
 
 	private final String loginUrl;
 
@@ -26,9 +23,9 @@ public class RedirectFilter extends Filter {
 
 	@Override
 	public void doFilter(HttpExchange he, Chain chain) throws IOException {
-		if (he.getAttribute(CustomHttpServer.USERNAME_ATTRIBUTE) == null) {
+		if (he.getAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE) == null) {
 			logger.info("No valid session found. Redirecting to login page");
-			he.getResponseHeaders().add(LOCATION_HEADER, loginUrl + INC_PARAM + he.getRequestURI());
+			he.getResponseHeaders().add(HeadersUtil.LOCATION_HEADER, loginUrl + "? "+ CustomHttpServerConstants.INC_PARAM + "=" + he.getRequestURI());
 			he.sendResponseHeaders(HttpStatus.SEE_OTHER.value(), -1L);
 			he.close();
 		} else

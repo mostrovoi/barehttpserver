@@ -2,8 +2,10 @@ package com.schibsted.server.view.handler;
 
 import java.io.IOException;
 
-import com.schibsted.server.CustomHttpServer;
+import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.service.SessionService;
+import com.schibsted.server.utils.CookieUtils;
+import com.schibsted.server.utils.HeadersUtil;
 import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -24,7 +26,7 @@ public class LogoutHandler extends AbstractBaseHandler {
 		//Removes the cookie in both browser and server
 		sessionService.delete(sessionId);
 		//TODO: move to helper
-	    he.getResponseHeaders().add("Set-Cookie",CustomHttpServer.SESSION_KEY+"=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT");
+	    he.getResponseHeaders().add(HeadersUtil.SET_COOKIE_HEADER,CookieUtils.getSetDeletedSession(CustomHttpServerConstants.SESSION_KEY));
 		String loginForm = createHtml(LOGOUT_TEMPLATE_NAME, new PageResponseDTO("Logout"));
 		sendOK(he, loginForm);
 	}

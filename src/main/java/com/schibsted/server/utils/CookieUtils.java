@@ -15,6 +15,12 @@ public class CookieUtils {
 			}
 		}
 		return null;
-
+	}
+	
+	public static String getSetDeletedSession(String session) {
+		if(session == null)
+			return null;
+		else
+			return session+"=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 	}
 }

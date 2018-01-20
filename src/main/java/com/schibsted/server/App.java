@@ -49,7 +49,7 @@ public class App {
 				redirectFilter);
 		myServer.createContext("/api/users", new UserApiHandler(userService, Role.ADMIN)).setAuthenticator(auth);
 		myServer.start();
-		logger.info("Server started in {}", myServer.getUrl());
+		logger.info("Server started in {}", myServer.getHost());
 		logger.info("Start by logging in at {}", loginUrl);
 	}
 }

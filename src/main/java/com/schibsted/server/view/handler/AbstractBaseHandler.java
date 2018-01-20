@@ -1,6 +1,6 @@
 package com.schibsted.server.view.handler;
 
-import static com.danisola.restify.url.RestParserFactory.parser; 
+import static com.danisola.restify.url.RestParserFactory.parser;
 import static com.danisola.restify.url.types.StrVar.strVar;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import com.danisola.restify.url.RestUrl;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import com.schibsted.server.CustomHttpServer;
+import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
@@ -49,12 +49,12 @@ abstract class AbstractBaseHandler implements HttpHandler {
     
 
     protected String getLoggedUsername(HttpExchange he) {
-    	Object username = he.getAttribute(CustomHttpServer.USERNAME_ATTRIBUTE);
+    	Object username = he.getAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE);
     	return username != null ? (String)username : null;
     }
     
     protected String getCurrentSessionId(HttpExchange he) {
-    	Object sessionId = he.getAttribute(CustomHttpServer.SESSION_ATTRIBUTE);
+    	Object sessionId = he.getAttribute(CustomHttpServerConstants.SESSION_ATTRIBUTE);
     	return sessionId != null ? (String)sessionId : null;
     }
     

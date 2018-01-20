@@ -1,12 +1,12 @@
 package com.schibsted.server.filter;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.schibsted.server.CustomHttpServer;
+import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.service.UserService;
 import com.schibsted.server.utils.HttpExchangeUtil;
@@ -27,23 +27,23 @@ public class FormParamsFilter extends Filter {
 
     @Override
     public void doFilter(HttpExchange httpExchange, Chain chain) throws IOException {
-		httpExchange.setAttribute(CustomHttpServer.LOGIN_ERROR_ATTRIBUTE, "0");   
+		httpExchange.setAttribute(CustomHttpServerConstants.LOGIN_ERROR_ATTRIBUTE, "0");   
     	//if no valid session has been found already
-		if(httpExchange.getAttribute(CustomHttpServer.USERNAME_ATTRIBUTE) == null) {
+		if(httpExchange.getAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE) == null) {
 	    	Map<String,String> params = HttpExchangeUtil.getFormParametersFromBody(httpExchange.getRequestBody());
 	    	if(params != null) {
-        		String username = params.get("username");
-	    		String password = params.get("password");
+        		String username = params.get(CustomHttpServerConstants.FORM_USERNAME);
+	    		String password = params.get(CustomHttpServerConstants.FORM_PASSWORD);
    
 	        	if (username != null && userService.checkCredentials(username, password)) {
 		    	    String sessionid = sessionService.create(username);
-		            httpExchange.setAttribute(CustomHttpServer.USERNAME_ATTRIBUTE, username);       
-		            httpExchange.setAttribute(CustomHttpServer.SESSION_ATTRIBUTE, sessionid);
-		            httpExchange.setAttribute(CustomHttpServer.LOGIN_ERROR_ATTRIBUTE, "0"); 
+		            httpExchange.setAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE, username);       
+		            httpExchange.setAttribute(CustomHttpServerConstants.SESSION_ATTRIBUTE, sessionid);
+		            httpExchange.setAttribute(CustomHttpServerConstants.LOGIN_ERROR_ATTRIBUTE, "0"); 
 					logger.debug("User {} logged in", username);
 		        }
 	        	else
-	        	    httpExchange.setAttribute(CustomHttpServer.LOGIN_ERROR_ATTRIBUTE, "1"); 
+	        	    httpExchange.setAttribute(CustomHttpServerConstants.LOGIN_ERROR_ATTRIBUTE, "1"); 
 					
 	        }
 	    }
