@@ -20,6 +20,9 @@ public class StreamUtils {
 			return null;
 		}
 		Scanner scanner = new Scanner(is, charset);
-		return scanner.useDelimiter("\\A").next();
+		String result=  scanner.useDelimiter("\\A").next();
+		//closes inputstream too
+		scanner.close();
+		return result;
 	}
 }

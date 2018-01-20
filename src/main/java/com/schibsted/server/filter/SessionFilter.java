@@ -43,7 +43,7 @@ public class SessionFilter extends Filter {
 
 	@Override
 	public String description() {
-		return "Session filter that checks for valid session and extracts username into attribute if found";
+		return "Session filter that checks for valid session and extracts username and session into attributes if found";
 	}
 
 }

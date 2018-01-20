@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.schibsted.server.CustomHttpServerConstants;
+
 public class HttpExchangeUtil {
 
 	private HttpExchangeUtil() {
@@ -36,10 +38,6 @@ public class HttpExchangeUtil {
 	}
 
 	public static Map<String, String> getFormParametersFromBody(InputStream is) {
-		// FIXME: Dont take content-type for granted: It should be Content-Type:
-		// application/x-www-form-urlencoded;
-		// SEE:
-		// https://www.w3.org/TR/html5/sec-forms.html#application-x-www-form-urlencoded-encoding-algorithm
 		Map<String, String> params = new HashMap<>();
 		String input = StreamUtils.convertInputStreamToString(is, StreamUtils.UTF_8);
 
@@ -51,5 +49,5 @@ public class HttpExchangeUtil {
 		}
 		return (params.isEmpty()) ? null : params;
 	}
-
+	
 }

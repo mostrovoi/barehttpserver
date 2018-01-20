@@ -1,7 +1,10 @@
 package com.schibsted.server.filter;
 
-import java.io.IOException; 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +13,7 @@ import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.service.UserService;
 import com.schibsted.server.utils.HttpExchangeUtil;
+import com.schibsted.server.utils.StreamUtils;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -28,8 +32,11 @@ public class FormParamsFilter extends Filter {
     @Override
     public void doFilter(HttpExchange httpExchange, Chain chain) throws IOException {
 		httpExchange.setAttribute(CustomHttpServerConstants.LOGIN_ERROR_ATTRIBUTE, "0");   
-    	//if no valid session has been found already
+
 		if(httpExchange.getAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE) == null) {
+			//TODO: Dont take content-type for granted: It should be Content-Type: application/x-www-form-urlencoded;
+			//https://www.w3.org/TR/html5/sec-forms.html#application-x-www-form-urlencoded-encoding-algorithm
+			
 	    	Map<String,String> params = HttpExchangeUtil.getFormParametersFromBody(httpExchange.getRequestBody());
 	    	if(params != null) {
         		String username = params.get(CustomHttpServerConstants.FORM_USERNAME);
