@@ -7,24 +7,26 @@ import org.apache.logging.log4j.Logger;
 
 import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.utils.HeadersUtil;
-import com.schibsted.server.utils.HttpExchangeUtil;
 import com.schibsted.server.utils.HttpStatus;
-import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
 public class AuthenticationFilter extends Filter {
 	
-	private final static String ERROR_TEMPLATE_NAME = "error.mustache";
-
 	private final static Logger logger = LogManager.getLogger(AuthenticationFilter.class);
 
+	private final String redirectUrl;
+	
+	public AuthenticationFilter(String loginUrl) {
+		this.redirectUrl = loginUrl; 
+	}
 	@Override
 	public void doFilter(HttpExchange he, Chain chain) throws IOException {
 		if (he.getAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE) == null) {
-			logger.info("No valid session found. Unauthorized");
-	        String errorHtml = HttpExchangeUtil.createHtml(ERROR_TEMPLATE_NAME, new PageResponseDTO("Error","guest","Not authenticated"));
-	        HttpExchangeUtil.send(he, errorHtml,HeadersUtil.CONTENT_TYPE_HTML,HttpStatus.UNAUTHORIZED.value());
+			logger.info("No valid session found. Redirecting to login");
+		    he.getResponseHeaders().add(HeadersUtil.LOCATION_HEADER, redirectUrl + "?" + CustomHttpServerConstants.LOCATION_PARAMETER + "=" + he.getRequestURI());
+		    he.sendResponseHeaders(HttpStatus.SEE_OTHER.value(), -1L);
+		    he.close();
 		} else
 			chain.doFilter(he);
 	}

@@ -1,11 +1,10 @@
 package com.schibsted.server.utils;
 
-import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,31 +38,31 @@ public class UrlParserUtil {
 	}
 
 	public static void parseQueryParams(String query, Map<String, String> parameters) {
-		if (query != null) {
+		if (query != null && query.length() != 0) {
 			String[] params = query.split("&");
 			if (params != null) {
 				for (String param : params) {
 					String[] split = param.split("=");
 					if (split.length == 1)
-						parameters.put(split[0], "true");
-					else if (split.length == 2)
-						parameters.put(split[0], split[1]);
+						parameters.put(split[0], "");
+					else if (split.length == 2) {
+						String value = split[1];
+						try {
+						   value = URLDecoder.decode(split[1],StreamUtils.UTF_8);
+						} catch (UnsupportedEncodingException e) {
+							logger.error("Error while decoding value {}",split[1]);
+						}
+						parameters.put(split[0], value);
+					}
 				}
 			}
 		}
 	}
-
-	public static Map<String, String> getFormParametersFromBody(InputStream is) {
-		Map<String, String> params = new HashMap<>();
-		String input = StreamUtils.convertInputStreamToString(is, StreamUtils.UTF_8);
-
-		Pattern p = Pattern.compile("(?:(\\w*)=(\\w*)(?=&|$))");
-		Matcher m = p.matcher(input);
-
-		while (m.find()) {
-			params.put(m.group(1), m.group(2));
-		}
-		return (params.isEmpty()) ? null : params;
+	
+	public static Map<String,String> getFormParametersFromBody(String query) {
+		Map<String,String> params = new HashMap<>();
+		parseQueryParams(query,params);
+		return params;
 	}
 
 }

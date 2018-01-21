@@ -26,8 +26,11 @@ public class LoginHandler extends AbstractBaseHandler {
 		}
 		else {
 			String sessionId = HttpExchangeUtil.getCurrentSessionId(he);
-		    he.getResponseHeaders().add(HeadersUtil.SET_COOKIE_HEADER,CustomHttpServerConstants.SESSION_KEY+"="+sessionId);		    
-		    he.getResponseHeaders().add(HeadersUtil.LOCATION_HEADER, "private");
+		    he.getResponseHeaders().add(HeadersUtil.SET_COOKIE_HEADER,CustomHttpServerConstants.SESSION_KEY+"="+sessionId);		 
+		    String redirectUrl = (String) he.getAttribute(CustomHttpServerConstants.REDIRECT_ATTRIBUTE);
+		    if(redirectUrl == null || "".equals(redirectUrl))
+		    	redirectUrl = "private";
+		    he.getResponseHeaders().add(HeadersUtil.LOCATION_HEADER, redirectUrl);
 		    he.sendResponseHeaders(HttpStatus.SEE_OTHER.value(), -1L);
 		    he.close();
 		}

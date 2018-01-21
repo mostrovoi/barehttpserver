@@ -37,7 +37,7 @@ public class App {
 		final BasicAuthenticator auth = new CustomAuthenticator(userService);
 
 		final SessionFilter sessionFilter = new SessionFilter(sessionService);
-		final AuthenticationFilter redirectFilter = new AuthenticationFilter();
+		final AuthenticationFilter redirectFilter = new AuthenticationFilter(loginUrl);
 		final FormParamsFilter formParamsFilter = new FormParamsFilter(sessionService, userService);
 		final ParamsFilter paramsFilter = new ParamsFilter();
 

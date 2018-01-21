@@ -15,5 +15,9 @@ public class CustomHttpServerConstants {
 	public static final String FORM_PASS = "password";
 	public static final String PARAMETERS_ATTRIBUTE = "parameters";
 	public static final String PATHLEVEL_ATTRIBUTE = "PATHLEVEL";
+	public static final String LOCATION_PARAMETER = "location";
+	public static final String REDIRECT_ATTRIBUTE = "redirect";
+	public static final String FORM_URL = "url";
+	
   
 }
