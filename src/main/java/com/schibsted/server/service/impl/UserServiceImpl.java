@@ -11,6 +11,7 @@ import com.schibsted.server.domain.User;
 import com.schibsted.server.domain.User.Role;
 import com.schibsted.server.exception.UserExistsException;
 import com.schibsted.server.exception.UsernameNotFoundException;
+import com.schibsted.server.exception.ValidationException;
 import com.schibsted.server.service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -45,18 +46,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean delete(String username) throws UsernameNotFoundException {
+	public boolean delete(String username) {
 		User user = this.getUserByUsername(username);
 		return users.delete(user);
 	}
 
 	@Override
-	public void create(User user) throws UserExistsException {
+	public void create(User user) throws UserExistsException, ValidationException {
 		users.add(user);
 	}
 
 	@Override
-	public void update(User user) throws UsernameNotFoundException {
+	public void update(User user) throws UsernameNotFoundException, ValidationException {
 		users.update(user);
 	}
 

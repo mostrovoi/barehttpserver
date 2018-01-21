@@ -6,6 +6,7 @@ import com.schibsted.server.domain.User;
 import com.schibsted.server.domain.User.Role;
 import com.schibsted.server.exception.UserExistsException;
 import com.schibsted.server.exception.UsernameNotFoundException;
+import com.schibsted.server.exception.ValidationException;
 
 /**
  * Business service interface to handle communication between web and
@@ -59,10 +60,8 @@ public interface UserService {
 	 * @param username
 	 *            the username
 	 * @return true if deleted, false otherwise
-	 * @throws UserNameNotFoundException
-	 *             exception thrown when user not found
 	 */
-	boolean delete(String username) throws UsernameNotFoundException;
+	boolean delete(String username);
 
 	/**
 	 * Adds a new a user.
@@ -74,8 +73,11 @@ public interface UserService {
 	 * @return user the new user object
 	 * @throws UserNameNotFoundException
 	 *             exception thrown when user not found
+	 * @throws ValidationException
+	 *             if the username is not valid or has not set username,
+	 *             password
 	 */
-	void create(User user) throws UserExistsException;
+	void create(User user) throws UserExistsException, ValidationException;
 
 	/**
 	 * Adds a new a user.
@@ -87,7 +89,10 @@ public interface UserService {
 	 * @return user the new user object
 	 * @throws UserNameNotFoundException
 	 *             exception thrown when user not found
+	 * @throws ValidationException
+	 *             if the username is not valid or has not set username,
+	 *             password
 	 */
-	void update(User user) throws UsernameNotFoundException;
+	void update(User user) throws UsernameNotFoundException, ValidationException;
 
 }

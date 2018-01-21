@@ -1,51 +1,54 @@
 package com.schibsted.server.utils;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringWriter;
+
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+import com.schibsted.server.CustomHttpServerConstants;
+import com.schibsted.server.view.dto.PageResponseDTO;
+import com.sun.net.httpserver.HttpExchange;
 
 public class HttpExchangeUtil {
-
-	private HttpExchangeUtil() {
-	}
-
-	/**
-	 * Helper method that extract a given parameter from the URI
-	 * 
-	 * @param parameter
-	 *            parameter to be looked up
-	 * @param query
-	 *            the entire query of the uri to be parsed
-	 * @return the value for given parameter, null if not found
-	 */
-	public static String parseRequestQuery(String parameter, String query) {
-		if(parameter == null || query == null)
-			return null;
-		
-		String [] params = query.split("&");
-		if(params != null){
-			for(String param : params) {
-				String [] split = param.split("=");
-				if(parameter.equals(split[0]))
-					return split[1];
-			}
-		}
-		return null;
-	}
-
-	public static Map<String, String> getFormParametersFromBody(InputStream is) {
-		Map<String, String> params = new HashMap<>();
-		String input = StreamUtils.convertInputStreamToString(is, StreamUtils.UTF_8);
-
-		Pattern p = Pattern.compile("(?:(\\w*)=(\\w*)(?=&|$))");
-		Matcher m = p.matcher(input);
-
-		while (m.find()) {
-			params.put(m.group(1), m.group(2));
-		}
-		return (params.isEmpty()) ? null : params;
-	}
 	
+	private HttpExchangeUtil() {}
+	
+    public static void send(HttpExchange he, String response, String contentType, int statuscode) throws IOException {
+    	he.getResponseHeaders().add(HeadersUtil.CONTENT_TYPE_HEADER,contentType);
+    	if(response == null || response.length() == 0) {
+    		he.sendResponseHeaders(statuscode,-1L);
+    		he.close();
+    	}
+    	else {
+	    	he.sendResponseHeaders(statuscode, response.length());
+	        OutputStream os = he.getResponseBody();
+	        os.write(response.getBytes());
+	        os.close();
+    	}
+    }
+    
+    public static void sendHtmlOK(HttpExchange he, String response) throws IOException {
+    	send(he, response, HeadersUtil.CONTENT_TYPE_HTML, HttpStatus.OK.value());
+    }
+    
+    public static String createHtml(String templateName, PageResponseDTO pageTemplate) throws IOException {
+		MustacheFactory mf = new DefaultMustacheFactory();
+		Mustache mustache = mf.compile(templateName);
+		StringWriter writer = new StringWriter();
+		mustache.execute(writer, pageTemplate).flush();
+		return writer.toString();
+	}
+    
+
+    public static String getLoggedUsername(HttpExchange he) {
+    	Object username = he.getAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE);
+    	return username != null ? (String)username : null;
+    }
+    
+    public static String getCurrentSessionId(HttpExchange he) {
+    	Object sessionId = he.getAttribute(CustomHttpServerConstants.SESSION_ATTRIBUTE);
+    	return sessionId != null ? (String)sessionId : null;
+    }
 }

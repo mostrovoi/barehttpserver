@@ -1,15 +1,14 @@
 package com.schibsted.server.domain;
 
-import java.util.ArrayList;  
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.schibsted.server.exception.ValidationException;
+import com.google.gson.annotations.Expose;
 
 public class User {
 
-	private static final String VALID_USERNAME_PATTERN  = "^[a-z0-9]+$";
-	
+
 	public enum Role {
 	    PAGE_1("page1"),
 	    PAGE_2("page2"),
@@ -28,17 +27,21 @@ public class User {
 		}
 	}
 	
+	@Expose
 	private final String username;
+	
+	@Expose
 	private final List<Role> roles = new ArrayList<>();
+	
+	@Expose(serialize=false)
 	private String password;
 	
-    public User(String username, String password) throws ValidationException {
-    	validateUsername(username);
+    public User(String username, String password)  {
         this.username = username;
-        this.setPassword(password);
+        this.password = password;
     }  
 	
-    public User(String username, String password, Role... roles) throws ValidationException {
+    public User(String username, String password, Role... roles) {
         this(username,password);
     	if(roles != null) 
 	        this.roles.addAll(Arrays.asList(roles));
@@ -64,10 +67,12 @@ public class User {
 			this.roles.addAll(roles);
 	}
 	
-	public void setPassword(String password) throws ValidationException {
-		if(password == null)
-			throw new ValidationException("Null password is not valid");
+	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public boolean isPasswordNull(){
+		return this.password == null;
 	}
 	
 	public boolean isAdmin() {
@@ -82,10 +87,6 @@ public class User {
 	    return (this.password != null && this.password.equals(password));
 	}
 	
-	private void validateUsername(String username) throws ValidationException {
-    	if(username == null  || !username.matches(VALID_USERNAME_PATTERN))
-    		throw new ValidationException("Username not valid:"+username);
-	}
 	
 	@Override
 	public int hashCode() {

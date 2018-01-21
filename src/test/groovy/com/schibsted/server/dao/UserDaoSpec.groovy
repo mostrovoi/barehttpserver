@@ -1,6 +1,7 @@
 package com.schibsted.server.dao;
 
 import spock.lang.Specification
+
 import com.schibsted.server.domain.User
 
 import static com.schibsted.server.domain.User.Role
@@ -9,6 +10,7 @@ import com.schibsted.server.dao.UserDao
 import com.schibsted.server.dao.impl.UserDaoImpl
 import com.schibsted.server.exception.UsernameNotFoundException
 import com.schibsted.server.exception.UserExistsException
+import com.schibsted.server.exception.ValidationException;
 
 class UserDaoSpec extends Specification {
 
@@ -26,6 +28,20 @@ class UserDaoSpec extends Specification {
 		then:
 			"ramon".equals(userDao.get("ramon").getUsername())
 	}
+	
+	def "A new user with invalid username throws exception"() {
+		when:
+			User u = new User(username, password)
+			userDao.add(u)
+		then:
+			thrown(expectedException)
+		where:
+		username  |  password || expectedException
+		  "AAA"   |   "bbb"   || ValidationException
+		  "%fdas" |   "bbb"   || ValidationException
+		  null    |   "bbb"   || ValidationException
+		  "aaa"   |   null    || ValidationException
+	 }
 
 	def "Adding one user to db should increase db size in one"() {
 		given:

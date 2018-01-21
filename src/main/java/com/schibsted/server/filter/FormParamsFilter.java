@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.service.UserService;
-import com.schibsted.server.utils.HttpExchangeUtil;
+import com.schibsted.server.utils.UrlParserUtil;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -33,7 +33,7 @@ public class FormParamsFilter extends Filter {
 			//TODO: Dont take content-type for granted: It should be Content-Type: application/x-www-form-urlencoded;
 			//https://www.w3.org/TR/html5/sec-forms.html#application-x-www-form-urlencoded-encoding-algorithm
 			
-	    	Map<String,String> params = HttpExchangeUtil.getFormParametersFromBody(httpExchange.getRequestBody());
+	    	Map<String,String> params = UrlParserUtil.getFormParametersFromBody(httpExchange.getRequestBody());
 	    	if(params != null) {
         		String username = params.get(CustomHttpServerConstants.FORM_USERNAME);
 	    		String password = params.get(CustomHttpServerConstants.FORM_PASS);
