@@ -13,7 +13,7 @@ import com.schibsted.server.CustomHttpServerConstants;
 
 public class UrlParserUtils {
 	static final Logger logger = LogManager.getLogger(UrlParserUtils.class);
-	
+
 	private UrlParserUtils() {
 	}
 
@@ -40,28 +40,26 @@ public class UrlParserUtils {
 	public static void parseQueryParams(String query, Map<String, String> parameters) {
 		if (query != null && query.length() != 0) {
 			String[] params = query.split("&");
-			if (params != null) {
-				for (String param : params) {
-					String[] split = param.split("=");
-					if (split.length == 1)
-						parameters.put(split[0], "");
-					else if (split.length == 2) {
-						String value = split[1];
-						try {
-						   value = URLDecoder.decode(split[1],StreamUtils.UTF_8);
-						} catch (UnsupportedEncodingException e) {
-							logger.error("Error while decoding value {}",split[1]);
-						}
-						parameters.put(split[0], value);
+			for (String param : params) {
+				String[] split = param.split("=");
+				if (split.length == 1)
+					parameters.put(split[0], "");
+				else if (split.length == 2) {
+					String value = split[1];
+					try {
+						value = URLDecoder.decode(split[1], StreamUtils.UTF_8);
+					} catch (UnsupportedEncodingException e) {
+						logger.error("Error while decoding value {}", split[1]);
 					}
+					parameters.put(split[0], value);
 				}
 			}
 		}
 	}
-	
-	public static Map<String,String> getFormParametersFromBody(String query) {
-		Map<String,String> params = new HashMap<>();
-		parseQueryParams(query,params);
+
+	public static Map<String, String> getFormParametersFromBody(String query) {
+		Map<String, String> params = new HashMap<>();
+		parseQueryParams(query, params);
 		return params;
 	}
 

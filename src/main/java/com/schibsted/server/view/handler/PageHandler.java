@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.schibsted.server.domain.User.Role;
 import com.schibsted.server.service.UserService;
-import com.schibsted.server.utils.HeadersUtila;
+import com.schibsted.server.utils.HeadersUtils;
 import com.schibsted.server.utils.HttpExchangeUtils;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.view.dto.PageResponseDTO;
@@ -33,7 +33,7 @@ public class PageHandler extends AbstractBaseHandler {
 		}
 		else {
 	        String errorHtml = HttpExchangeUtils.createHtml(ERROR_TEMPLATE_NAME, new PageResponseDTO("Error",username,"Not allowed"));
-	        HttpExchangeUtils.send(he, errorHtml,HeadersUtila.CONTENT_TYPE_HTML,HttpStatus.FORBIDDEN.value());
+	        HttpExchangeUtils.send(he, errorHtml,HeadersUtils.CONTENT_TYPE_HTML,HttpStatus.FORBIDDEN.value());
 	        
 		}
 	}

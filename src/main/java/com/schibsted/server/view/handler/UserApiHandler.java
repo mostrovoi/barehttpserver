@@ -11,7 +11,7 @@ import com.schibsted.server.domain.User.Role;
 import com.schibsted.server.exception.UserExistsException;
 import com.schibsted.server.exception.UsernameNotFoundException;
 import com.schibsted.server.service.UserService;
-import com.schibsted.server.utils.HeadersUtila;
+import com.schibsted.server.utils.HeadersUtils;
 import com.schibsted.server.utils.HttpExchangeUtils;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.utils.RequestMethod;
@@ -47,7 +47,7 @@ public class UserApiHandler extends AbstractBaseHandler {
 
 		// Get requested username and request body
 		String requestBody = StreamUtils.convertInputStreamToString(he.getRequestBody(), StreamUtils.UTF_8);
-		Map<String, String> parameters = (Map<String, String>) he
+		Map<String, String> parameters = (Map<String,String>) he
 				.getAttribute(CustomHttpServerConstants.PARAMETERS_ATTRIBUTE);
 		String requestedUsername = null;
 		String extraParam = null;
@@ -83,7 +83,7 @@ public class UserApiHandler extends AbstractBaseHandler {
 				break;
 			}
 		}
-		HttpExchangeUtils.send(he, responseDtO.getBody(), HeadersUtila.CONTENT_TYPE_JSON, responseDtO.getStatusCode());
+		HttpExchangeUtils.send(he, responseDtO.getBody(), HeadersUtils.CONTENT_TYPE_JSON, responseDtO.getStatusCode());
 	}
 
 	private boolean isOperationAllowedForUser(String username, String method, Role validRole) {

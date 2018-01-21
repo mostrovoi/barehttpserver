@@ -1,8 +1,8 @@
 package com.schibsted.server.utils;
 
-public class HeadersUtila {
+public class HeadersUtils {
 	
-	private HeadersUtila() {}
+	private HeadersUtils() {}
 	
     public static final String CONTENT_TYPE_HEADER = "Content-Type";
     public static final String CONTENT_TYPE_JSON = "application/json";

@@ -8,7 +8,7 @@ Following libraries are in use: **Gson** for serializing DTO to json, **Mustache
 
 ## Run the application
 
-This application has been made using **gradle**. To build the application type the following command:
+This application uses **gradle** as a build tool. To build the application type the following command:
 
 ```
 gradle clean build
@@ -68,7 +68,7 @@ curl -i -H "Content-Type: application/json" -X GET http://localhost:8080/api/use
 ```
 curl -i -H "Content-Type: application/json" -X DELETE http://localhost:8080/api/users/user1 --user admin:admin
 ```
-### User update (must exist previously)
+### User update
 ```
 curl -i -H "Content-Type: application/json" -X PUT -d '{"username":"user2","password":"test","roles":["PAGE_1"]}' http://localhost:8080/api/users/user2 --user admin:admin
 ```

@@ -42,16 +42,18 @@ public class App {
 		final ParamsFilter paramsFilter = new ParamsFilter();
 
 		myServer.createContextWithFilters("/login", new LoginHandler(), paramsFilter, sessionFilter, formParamsFilter);
-		myServer.createContextWithFilters("/private", new IndexPageHandler(), paramsFilter, sessionFilter, redirectFilter);
-		myServer.createContextWithFilters("/private/page1", new PageHandler(userService, Role.PAGE_1), paramsFilter, sessionFilter,
+		myServer.createContextWithFilters("/private", new IndexPageHandler(), paramsFilter, sessionFilter,
 				redirectFilter);
-		myServer.createContextWithFilters("/private/page2", new PageHandler(userService, Role.PAGE_2), paramsFilter, sessionFilter,
-				redirectFilter);
-		myServer.createContextWithFilters("/private/page3", new PageHandler(userService, Role.PAGE_3), paramsFilter, sessionFilter,
-				redirectFilter);
-		myServer.createContextWithFilters("/private/logout", new LogoutHandler(sessionService), paramsFilter, sessionFilter,
-				redirectFilter);
-		myServer.createContextWithFilters("/api/users", new UserApiHandler(userService, Role.ADMIN), paramsFilter).setAuthenticator(auth);
+		myServer.createContextWithFilters("/private/page1", new PageHandler(userService, Role.PAGE_1), paramsFilter,
+				sessionFilter, redirectFilter);
+		myServer.createContextWithFilters("/private/page2", new PageHandler(userService, Role.PAGE_2), paramsFilter,
+				sessionFilter, redirectFilter);
+		myServer.createContextWithFilters("/private/page3", new PageHandler(userService, Role.PAGE_3), paramsFilter,
+				sessionFilter, redirectFilter);
+		myServer.createContextWithFilters("/private/logout", new LogoutHandler(sessionService), paramsFilter,
+				sessionFilter, redirectFilter);
+		myServer.createContextWithFilters("/api/users", new UserApiHandler(userService, Role.ADMIN), paramsFilter)
+				.setAuthenticator(auth);
 		myServer.start();
 		logger.info("Server started in {}", myServer.getHost());
 		logger.info("Start by logging in at {}", loginUrl);

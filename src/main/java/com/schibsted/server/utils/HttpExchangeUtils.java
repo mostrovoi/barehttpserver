@@ -16,7 +16,7 @@ public class HttpExchangeUtils {
 	private HttpExchangeUtils() {}
 	
     public static void send(HttpExchange he, String response, String contentType, int statuscode) throws IOException {
-    	he.getResponseHeaders().add(HeadersUtila.CONTENT_TYPE_HEADER,contentType);
+    	he.getResponseHeaders().add(HeadersUtils.CONTENT_TYPE_HEADER,contentType);
     	if(response == null || response.length() == 0) {
     		he.sendResponseHeaders(statuscode,-1L);
     		he.close();
@@ -30,7 +30,7 @@ public class HttpExchangeUtils {
     }
     
     public static void sendHtmlOK(HttpExchange he, String response) throws IOException {
-    	send(he, response, HeadersUtila.CONTENT_TYPE_HTML, HttpStatus.OK.value());
+    	send(he, response, HeadersUtils.CONTENT_TYPE_HTML, HttpStatus.OK.value());
     }
     
     public static String createHtml(String templateName, PageResponseDTO pageTemplate) throws IOException {
