@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> getAll() {
-		return new ArrayList<User>(users.values());
+		return new ArrayList<>(users.values());
 	}
 
 	@Override
@@ -84,6 +84,6 @@ public class UserDaoImpl implements UserDao {
 
 	private void checkIfExists(User u) throws UsernameNotFoundException {
 		if (u == null || this.get(u.getUsername()) == null)
-			throw new UsernameNotFoundException("User with username " + u.getUsername() + " not found");
+			throw new UsernameNotFoundException("Username not found");
 	}
 }

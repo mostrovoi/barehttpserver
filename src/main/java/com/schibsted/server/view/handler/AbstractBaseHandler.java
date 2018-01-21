@@ -13,5 +13,5 @@ import com.sun.net.httpserver.HttpHandler;
 abstract class AbstractBaseHandler implements HttpHandler {
 
 	static final Logger logger = LogManager.getLogger(AbstractBaseHandler.class);
-	    
+
 }

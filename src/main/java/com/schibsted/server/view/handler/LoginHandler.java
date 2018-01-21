@@ -11,7 +11,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class LoginHandler extends AbstractBaseHandler {
 
-	private final static String FORM_LOGIN_TEMPLATE_NAME = "login.mustache";
+	private static final String FORM_LOGIN_TEMPLATE_NAME = "login.mustache";
 	
 	@Override
 	public void handle(HttpExchange he) throws IOException {

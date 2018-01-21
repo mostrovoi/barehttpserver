@@ -2,9 +2,6 @@ package com.schibsted.server.service.impl;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.schibsted.server.dao.UserDao;
 import com.schibsted.server.dao.impl.UserDaoImpl;
 import com.schibsted.server.domain.User;
@@ -17,7 +14,6 @@ import com.schibsted.server.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	private final UserDao users;
-	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
 	public UserServiceImpl() {
 		users = new UserDaoImpl();
@@ -36,13 +32,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean checkCredentials(String username, String password) {
 		User user = this.getUserByUsername(username);
-		return (user == null) ? false : user.authenticate(password); 
+		return (user == null) ? false : user.authenticate(password);
 	}
 
 	@Override
 	public boolean hasUserRole(String username, Role role) {
 		User user = this.getUserByUsername(username);
-		return (user == null) ? false : user.hasRole(role); 
+		return (user == null) ? false : user.hasRole(role);
 	}
 
 	@Override

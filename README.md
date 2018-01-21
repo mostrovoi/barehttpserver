@@ -54,7 +54,7 @@ The following pages can be also tested, given the authenticated user has the nee
 This application provides also a REST API for user management. Only authenticated users can use it. 
 Users with role ADMIN can modify, create and delete other users via the REST API. The rest of authenticated users can only read data via the API. 
 
-The authentication is done with Basic Auth. Only alphanumerical values and non capital letters are accepted as valid usernames
+The authentication is done with Basic Auth. Only alphanumerical values and non capital letters are accepted as valid usernames.
 
 ### Read all users 
 ```

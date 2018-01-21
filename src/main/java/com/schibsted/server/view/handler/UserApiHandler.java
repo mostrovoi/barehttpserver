@@ -23,8 +23,8 @@ public class UserApiHandler extends AbstractBaseHandler {
 
 	private final UserService userService;
 	private final Role validRole;
-	private final static String USER = CustomHttpServerConstants.PATHLEVEL_ATTRIBUTE + 3;
-	private final static String EXTRA_PARAM = CustomHttpServerConstants.PATHLEVEL_ATTRIBUTE + 4;
+	private static final String USER = CustomHttpServerConstants.PATHLEVEL_ATTRIBUTE + 3;
+	private static final String EXTRA_PARAM = CustomHttpServerConstants.PATHLEVEL_ATTRIBUTE + 4;
 
 	private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
@@ -127,8 +127,7 @@ public class UserApiHandler extends AbstractBaseHandler {
 			User u = gson.fromJson(body, User.class);
 			userService.create(u);
 		} catch (UserExistsException e) {
-			String error = String.format("The username {} already exists. Not able to create it", requestedUsername);
-			logger.warn(error);
+			logger.warn("The username {} already exists. Not able to create it", requestedUsername);
 			return new APIResponseDTO(HttpStatus.BAD_REQUEST.value(), "");
 		} catch (Exception e) {
 			String error = "Unable to create user from given request body";

@@ -122,7 +122,7 @@ public class User {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if(roles != null) {
+		if(roles.size() == 0) {
 			for(Role r : roles){
 				sb.append("["+r.toString()+"] ");
 			}

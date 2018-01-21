@@ -17,7 +17,7 @@ public class AuthenticationFilter extends Filter {
 	
 	private final static String ERROR_TEMPLATE_NAME = "error.mustache";
 
-	private static final Logger logger = LogManager.getLogger(AuthenticationFilter.class);
+	private final static Logger logger = LogManager.getLogger(AuthenticationFilter.class);
 
 	@Override
 	public void doFilter(HttpExchange he, Chain chain) throws IOException {
