@@ -15,14 +15,14 @@ class UserSpec extends Specification {
 	}
 	
 	
-	def "A  user with roles set should return the new roles"() {
+	def "A user with roles set should return the new roles"() {
 		when: 
 			User u = new User("aaaa","bbb",Role.PAGE_1, Role.PAGE_2);
 		then: 
 			u.getRoles().size() == 2;
 	}
 	
-	def "A  user with roles repeated should return all roles"() {
+	def "A user with roles repeated should return all roles"() {
 		when: 
 			User u = new User("aaaa","bbb",Role.PAGE_1,Role.PAGE_2, Role.PAGE_3,Role.PAGE_1,Role.PAGE_2,Role.ADMIN);
 		then: 

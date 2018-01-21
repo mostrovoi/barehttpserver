@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.schibsted.server.CustomHttpServerConstants;
-import com.schibsted.server.utils.HeadersUtil;
+import com.schibsted.server.utils.HeadersUtila;
 import com.schibsted.server.utils.HttpStatus;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
@@ -24,7 +24,7 @@ public class AuthenticationFilter extends Filter {
 	public void doFilter(HttpExchange he, Chain chain) throws IOException {
 		if (he.getAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE) == null) {
 			logger.info("No valid session found. Redirecting to login");
-		    he.getResponseHeaders().add(HeadersUtil.LOCATION_HEADER, redirectUrl + "?" + CustomHttpServerConstants.LOCATION_PARAMETER + "=" + he.getRequestURI());
+		    he.getResponseHeaders().add(HeadersUtila.LOCATION_HEADER, redirectUrl + "?" + CustomHttpServerConstants.LOCATION_PARAMETER + "=" + he.getRequestURI());
 		    he.sendResponseHeaders(HttpStatus.SEE_OTHER.value(), -1L);
 		    he.close();
 		} else

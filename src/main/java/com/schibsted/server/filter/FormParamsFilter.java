@@ -10,7 +10,7 @@ import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.service.UserService;
 import com.schibsted.server.utils.StreamUtils;
-import com.schibsted.server.utils.UrlParserUtil;
+import com.schibsted.server.utils.UrlParserUtils;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -35,7 +35,7 @@ public class FormParamsFilter extends Filter {
 			//TODO: Dont take content-type for granted: It should be Content-Type: application/x-www-form-urlencoded;
 			//https://www.w3.org/TR/html5/sec-forms.html#application-x-www-form-urlencoded-encoding-algorithm
 			String requestBody = StreamUtils.convertInputStreamToString(httpExchange.getRequestBody(), StreamUtils.UTF_8);
-	    	Map<String,String> params = UrlParserUtil.getFormParametersFromBody(requestBody);
+	    	Map<String,String> params = UrlParserUtils.getFormParametersFromBody(requestBody);
 	    	if(params != null && params.size() > 0) {
         		String username = params.get(CustomHttpServerConstants.FORM_USERNAME);
 	    		String password = params.get(CustomHttpServerConstants.FORM_PASS);

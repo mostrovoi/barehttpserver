@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.service.SessionService;
 import com.schibsted.server.utils.CookieUtils;
-import com.schibsted.server.utils.HeadersUtil;
+import com.schibsted.server.utils.HeadersUtila;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -28,7 +28,7 @@ public class SessionFilter extends Filter {
 		httpExchange.setAttribute(CustomHttpServerConstants.USERNAME_ATTRIBUTE, null);
 		httpExchange.setAttribute(CustomHttpServerConstants.SESSION_ATTRIBUTE, null);
 
-		List<String> cookies = httpExchange.getRequestHeaders().get(HeadersUtil.COOKIE_HEADER);
+		List<String> cookies = httpExchange.getRequestHeaders().get(HeadersUtila.COOKIE_HEADER);
 		String sessionId = CookieUtils.getValue(CustomHttpServerConstants.SESSION_KEY, cookies);
 		String username = sessionService.getUsername(sessionId);
 		if (sessionService.isValid(sessionId)) {

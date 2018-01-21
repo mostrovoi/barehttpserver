@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import com.schibsted.server.domain.User.Role;
 import com.schibsted.server.service.UserService;
-import com.schibsted.server.utils.HeadersUtil;
-import com.schibsted.server.utils.HttpExchangeUtil;
+import com.schibsted.server.utils.HeadersUtila;
+import com.schibsted.server.utils.HttpExchangeUtils;
 import com.schibsted.server.utils.HttpStatus;
 import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
@@ -26,14 +26,14 @@ public class PageHandler extends AbstractBaseHandler {
 	@Override
 	public void handle(HttpExchange he) throws IOException {
 
-		String username = HttpExchangeUtil.getLoggedUsername(he);
+		String username = HttpExchangeUtils.getLoggedUsername(he);
 		if(this.userService.hasUserRole(username, validRole)) {
-	        String pageHtml = HttpExchangeUtil.createHtml(PAGE_TEMPLATE_NAME, new PageResponseDTO("Page ",username));
-	        HttpExchangeUtil.sendHtmlOK(he, pageHtml);
+	        String pageHtml = HttpExchangeUtils.createHtml(PAGE_TEMPLATE_NAME, new PageResponseDTO("Page ",username));
+	        HttpExchangeUtils.sendHtmlOK(he, pageHtml);
 		}
 		else {
-	        String errorHtml = HttpExchangeUtil.createHtml(ERROR_TEMPLATE_NAME, new PageResponseDTO("Error",username,"Not allowed"));
-	        HttpExchangeUtil.send(he, errorHtml,HeadersUtil.CONTENT_TYPE_HTML,HttpStatus.FORBIDDEN.value());
+	        String errorHtml = HttpExchangeUtils.createHtml(ERROR_TEMPLATE_NAME, new PageResponseDTO("Error",username,"Not allowed"));
+	        HttpExchangeUtils.send(he, errorHtml,HeadersUtila.CONTENT_TYPE_HTML,HttpStatus.FORBIDDEN.value());
 	        
 		}
 	}

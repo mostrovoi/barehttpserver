@@ -53,6 +53,13 @@ class UserDaoSpec extends Specification {
 			userDao.getAll().size() == size+1
 	}
 	
+	def "Returning all users should return the entire collection"() {
+		when:
+			def users = userDao.getAll()
+		then:
+			users.size() == 6
+	}
+	
 	def "Password should be updated in DB"() {
 		given:
 			User u = new User("perrito","bravo")
@@ -83,6 +90,25 @@ class UserDaoSpec extends Specification {
 			userDao.delete(u)
 		then:
 			userDao.get(u.getUsername()) == null
+	}
+	
+	def "Delete one user should return true from the operation "() {
+		given:
+			User u = new User("a","b")
+			userDao.add(u)
+		when:
+			def operation = userDao.delete(u)
+		then:
+			operation == true
+	}
+	
+	def "Delete one non existing user should return false "() {
+		given:
+			User u = new User("a","b")
+		when:
+			def operation = userDao.delete(u)
+		then:
+			operation == false
 	}
 
 	def "Adding 1 user with username already existing should throw UserExistException"() {

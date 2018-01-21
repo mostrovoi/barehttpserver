@@ -11,10 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.schibsted.server.CustomHttpServerConstants;
 
-public class UrlParserUtil {
-	static final Logger logger = LogManager.getLogger(UrlParserUtil.class);
+public class UrlParserUtils {
+	static final Logger logger = LogManager.getLogger(UrlParserUtils.class);
 	
-	private UrlParserUtil() {
+	private UrlParserUtils() {
 	}
 
 	public static Map<String, String> parseUrlParameters(URI uri) {

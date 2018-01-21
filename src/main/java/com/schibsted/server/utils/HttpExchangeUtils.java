@@ -11,12 +11,12 @@ import com.schibsted.server.CustomHttpServerConstants;
 import com.schibsted.server.view.dto.PageResponseDTO;
 import com.sun.net.httpserver.HttpExchange;
 
-public class HttpExchangeUtil {
+public class HttpExchangeUtils {
 	
-	private HttpExchangeUtil() {}
+	private HttpExchangeUtils() {}
 	
     public static void send(HttpExchange he, String response, String contentType, int statuscode) throws IOException {
-    	he.getResponseHeaders().add(HeadersUtil.CONTENT_TYPE_HEADER,contentType);
+    	he.getResponseHeaders().add(HeadersUtila.CONTENT_TYPE_HEADER,contentType);
     	if(response == null || response.length() == 0) {
     		he.sendResponseHeaders(statuscode,-1L);
     		he.close();
@@ -30,7 +30,7 @@ public class HttpExchangeUtil {
     }
     
     public static void sendHtmlOK(HttpExchange he, String response) throws IOException {
-    	send(he, response, HeadersUtil.CONTENT_TYPE_HTML, HttpStatus.OK.value());
+    	send(he, response, HeadersUtila.CONTENT_TYPE_HTML, HttpStatus.OK.value());
     }
     
     public static String createHtml(String templateName, PageResponseDTO pageTemplate) throws IOException {
