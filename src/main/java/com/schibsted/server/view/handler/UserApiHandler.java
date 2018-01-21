@@ -74,7 +74,7 @@ public class UserApiHandler extends AbstractBaseHandler {
 			case DELETE:
 				responseDtO = handleDeleteOperation(requestedUsername);
 				break;
-			// TODO: To add support in the future
+			//TODO: To add support in the future
 			case OPTIONS:
 			case PATCH:
 			case HEAD:

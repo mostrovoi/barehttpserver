@@ -1,6 +1,6 @@
 package com.schibsted.server.utils;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.io.OutputStream;
 import java.io.StringWriter;
 
@@ -16,12 +16,12 @@ public class HttpExchangeUtils {
 	private HttpExchangeUtils() {}
 	
     public static void send(HttpExchange he, String response, String contentType, int statuscode) throws IOException {
-    	he.getResponseHeaders().add(HeadersUtils.CONTENT_TYPE_HEADER,contentType);
     	if(response == null || response.length() == 0) {
     		he.sendResponseHeaders(statuscode,-1L);
     		he.close();
     	}
     	else {
+        	he.getResponseHeaders().add(HeadersUtils.CONTENT_TYPE_HEADER,contentType);
 	    	he.sendResponseHeaders(statuscode, response.length());
 	        OutputStream os = he.getResponseBody();
 	        os.write(response.getBytes());

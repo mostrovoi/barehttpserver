@@ -11,10 +11,10 @@ Following libraries are in use: **Gson** for serializing DTO to json, **Mustache
 This application uses **gradle** as a build tool. To build the application type the following command:
 
 ```
-gradle clean build
+gradlew build
 ```
 
-To run the application once it is build:
+To run the application once it is built:
 ```
 java -jar /build/libs/test-web-application-1.0.jar
 ```
@@ -27,7 +27,7 @@ Start navigation by going to the login page:
 
 * http://localhost:8080/login 
 
-The following pages can be also tested, given the authenticated user has the needed role:
+The following pages can be also tested, given that the authenticated user has the needed role:
 
 | Webpage                             | Role    |
 |------------------------------------ | ------- |
@@ -49,7 +49,7 @@ The following pages can be also tested, given the authenticated user has the nee
 |admin    | admin    | ADMIN |
 
 
-## API Rest
+## REST API
 
 This application provides also a REST API for user management. Only authenticated users can use it. 
 Users with role ADMIN can modify, create and delete other users via the REST API. The rest of authenticated users can only read data via the API. 
