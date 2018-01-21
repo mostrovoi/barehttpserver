@@ -57,24 +57,24 @@ Users with role ADMIN can modify, create and delete other users via the REST API
 The authentication is done with Basic Auth. Only alphanumerical values and non capital letters are accepted as valid usernames
 
 ### Read all users 
-'''
+```
 curl -i -H "Content-Type: application/json" -X GET http://localhost:8080/api/users --user user1:user1
-'''
+```
 ### Read user1
-'''
+```
 curl -i -H "Content-Type: application/json" -X GET http://localhost:8080/api/users/user1 --user user1:user1
-'''
+```
 ### User deletion
-'''
+```
 curl -i -H "Content-Type: application/json" -X DELETE http://localhost:8080/api/users/user1 --user admin:admin
-'''
+```
 ### User update (must exist previously)
-'''
+```
 curl -i -H "Content-Type: application/json" -X PUT -d '{"username":"user2","password":"test","roles":["PAGE_1"]}' http://localhost:8080/api/users/user2 --user admin:admin
-'''
+```
 ### User creation
-'''
-curl -i -H "Content-Type: application/json" -X POST -d '{"username":"newuser","password":"test","roles":["PAGE_1"]}' http://localhost:8080/api/users --user admin:admin
-'''
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{"username":"newuser","password":"test","roles":["ADMIN","PAGE_1"]}' http://localhost:8080/api/users --user admin:admin
+```
 
 
