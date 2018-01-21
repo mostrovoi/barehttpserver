@@ -29,13 +29,13 @@ Start navigation by going to the login page:
 
 The following pages can be also tested, given the authenticated user has the needed role:
 
-Webpage  | Role |
--------- | -----|
-* http://localhost:8080/private/  |  ANY   |
-* http://localhost:8080/private/page1 | PAGE_1 |
-* http://localhost:8080/private/page2 | PAGE_2 | 
-* http://localhost:8080/private/page3 | PAGE_3 |
-* http://localhost:8080/private/logout | ANY   | 
+Webpage                               | Role    |
+------------------------------------- | ------- |
+* http://localhost:8080/private/      | ANY     |
+* http://localhost:8080/private/page1 | PAGE_1  |
+* http://localhost:8080/private/page2 | PAGE_2  | 
+* http://localhost:8080/private/page3 | PAGE_3  |
+* http://localhost:8080/private/logout| ANY     | 
 
 ### Availabe users
 
