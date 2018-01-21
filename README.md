@@ -16,7 +16,7 @@ gradlew build
 
 To run the application once it is built:
 ```
-java -jar /build/libs/test-web-application-1.0.jar
+java -jar build/libs/test-web-application-1.0.jar
 ```
 
 This will start a web server listening on localhost and port 8080. 
