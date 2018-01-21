@@ -9,14 +9,15 @@ Following libraries are in use: **Gson** for serializing DTO to json, **Mustache
 ## Run the application
 
 This application has been made using **gradle**. To build the application type the following command:
-'''
+
+```
 gradle clean build
-'''
+```
 
 To run the application once it is build:
-''''
+```
 java -jar /build/libs/test-web-application-1.0.jar
-''''
+```
 
 This will start a web server listening on localhost and port 8080. 
 
@@ -46,7 +47,6 @@ user3    |  user3   | PAGE_3 |
 user4    |  user4   | PAGE_1, PAGE_2, PAGE_3 |
 user5    |  user5   | PAGE_2, PAGE_3 |
 admin    | admin    | ADMIN |
-
 
 
 ## API Rest
