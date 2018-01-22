@@ -49,5 +49,12 @@ class UserApiHandlerSpec extends Specification {
 		then:
 			result.statusCode == 404
 	}
+	
+	def "Create operation returns bad request is username is passed as parameter"() {
+		when:
+			APIResponseDTO result = userApiHandler.handleCreateOperation("noexiste", "{}");
+		then:
+			result.statusCode == 400
+	}
 
 }
