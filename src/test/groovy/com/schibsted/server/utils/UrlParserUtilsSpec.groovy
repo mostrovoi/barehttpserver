@@ -1,7 +1,8 @@
 package com.schibsted.server.utils
 
-import spock.lang.Specification
+import spock.lang.Specification 
 import com.schibsted.server.utils.UrlParserUtils
+import java.net.URI
 
 class UrlParserUtilsSpec extends Specification {
 	
@@ -71,6 +72,18 @@ class UrlParserUtilsSpec extends Specification {
 			UrlParserUtils.parseAPIUrl(url, parameters)
 		then:
 			parameters["PATHLEVEL1"] == null
+	}
+	
+	def "Parses all data from well given URI"() {
+		given:
+			URI uri = new URI("http://localhost:8080/api/users/user1?prueba=ok&test=fail")
+		when:
+		    def parameters = UrlParserUtils.parseUrlParameters(uri)
+		then:
+			parameters["PATHLEVEL1"] == "api"
+			parameters["PATHLEVEL3"] == "user1"
+			parameters["prueba"] == "ok"
+			parameters["test"] == "fail"
 	}
 	
 }

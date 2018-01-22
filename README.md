@@ -37,7 +37,7 @@ The following pages can be also tested, given that the authenticated user has th
 | http://localhost:8080/private/page3 | PAGE_3  |
 | http://localhost:8080/private/logout| ANY     | 
 
-### Availabe users
+### Available users
 
 |Username | Password | Role |
 |---------| -------- | ---- |
