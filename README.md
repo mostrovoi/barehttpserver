@@ -27,7 +27,7 @@ Start navigation by going to the login page:
 
 * http://localhost:8080/login 
 
-The following pages can be also tested, given that the authenticated user has the needed role:
+The following pages can also be tested, given that the authenticated user has the needed role:
 
 | Webpage                             | Role    |
 |------------------------------------ | ------- |
@@ -51,10 +51,10 @@ The following pages can be also tested, given that the authenticated user has th
 
 ## REST API
 
-This application provides also a REST API for user management. Only authenticated users can use it. 
+This application provides a REST API for user management. Only authenticated users can use it. 
 Users with role ADMIN can modify, create and delete other users via the REST API. The rest of authenticated users can only read data via the API. 
 
-The authentication is done with Basic Auth. Only alphanumerical values and non capital letters are accepted as valid usernames.
+The authentication is done with Basic Auth. Valid usernames contain only alphanumerical values and non capital letters.
 
 ### Read all users 
 ```
