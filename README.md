@@ -1,7 +1,7 @@
 # Bare httpserver
 
 [![Build Status](https://travis-ci.org/mostrovoi/barehttpserver.svg?branch=master)](https://travis-ci.org/mostrovoi/barehttpserver)
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.schibsted.server%3Atest-web-application)](https://sonarcloud.io/dashboard/index/com.schibsted.server%3Atest-web-application)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?id=com.schibsted.server%3Atest-web-application)](https://sonarcloud.io/dashboard/index/com.schibsted.server%3Atest-web-application)
 
 Implementation of a basic web server using  core Java classes. 
 Following libraries are in use: **Gson** for serializing DTO to json, **Mustache** as templating engine, **Spock** for unit and dobule tests, **Guava** for session cache, **Gradle** as build tool and **log4j2** for logging purposes.
